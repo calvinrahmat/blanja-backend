@@ -4,6 +4,6 @@ const ctrlProducts = require('../controllers/products');
 
 router.get('/', ctrlProducts.getAll);
 router.post('/addData', ctrlProducts.addData);
-router.get('/Kategori', ctrlProducts.getCategory);
+router.get('/Kategori/:kategori', ctrlProducts.getCategory);
 
 module.exports = router;

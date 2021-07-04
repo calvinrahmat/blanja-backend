@@ -13,10 +13,11 @@ productDB.getAll = () => {
 	});
 };
 
-productDB.filterCategory = () => {
+productDB.filterCategory = (kategori) => {
 	return new Promise((resolve, reject) => {
-		const kategori = 1;
-		db.query(`SELECT * FROM public.fashion WHERE Kategori_id = ${kategori}`)
+		db.query(
+			`SELECT * FROM public.fashion WHERE kategori_id = ${kategori} ORDER BY id DESC`
+		)
 			.then((res) => {
 				resolve(res.rows);
 			})

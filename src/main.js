@@ -1,10 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const products = require('./routes/products');
-const users = require('./routes/users');
+const bag = require('./routes/bag');
 
 router.use('/products', products);
-router.use('/users', users);
+router.use('/bag', bag);
 router.use('*', (req, res) => {
 	res.send('page not found');
 });

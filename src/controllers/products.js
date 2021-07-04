@@ -1,19 +1,22 @@
 const productsMethod = {};
-const modelDB = require('../models/products');
+const modelProduct = require('../models/products');
 
 productsMethod.getAll = async (req, res) => {
 	try {
-		const response = await modelDB.getAll();
+		const response = await modelProduct.getAll();
 		res.send(response);
 	} catch (error) {
 		res.send(error);
 	}
 };
 
-productsMethod.getID = (req, res) => {
-	const findID = data.find((a) => a.id === parseInt(req.params.id));
-	if (!findID) res.status(404).send('The ID not found');
-	res.send(findID);
+productsMethod.getCategory = async (req, res) => {
+	try {
+		const response = await modelProduct.filterCategory(req.params.category);
+		res.send(response);
+	} catch (error) {
+		res.send(error);
+	}
 };
 
 productsMethod.addData = async (req, res) => {

@@ -19,10 +19,46 @@ productsMethod.getCategory = async (req, res) => {
 	}
 };
 
-productsMethod.addData = async (req, res) => {
+productsMethod.searchData = async (req, res) => {
 	try {
-		const respone = await modelDB.addData(req.body);
-		res.send(respone);
+		const response = await modelProduct.search(req.params.nama);
+		res.send(response);
+	} catch (error) {
+		res.send(error);
+	}
+};
+
+productsMethod.sortByPriceDescending = async (req, res) => {
+	try {
+		const response = await modelProduct.sortPriceDesc();
+		res.send(response);
+	} catch (error) {
+		res.send(error);
+	}
+};
+
+productsMethod.sortByPriceAscending = async (req, res) => {
+	try {
+		const response = await modelProduct.sortPriceAsc();
+		res.send(response);
+	} catch (error) {
+		res.send(error);
+	}
+};
+
+productsMethod.sortByNameAscending = async (req, res) => {
+	try {
+		const response = await modelProduct.sortNameAsc();
+		res.send(response);
+	} catch (error) {
+		res.send(error);
+	}
+};
+
+productsMethod.sortByNameDescending = async (req, res) => {
+	try {
+		const response = await modelProduct.sortNameDesc();
+		res.send(response);
 	} catch (error) {
 		res.send(error);
 	}

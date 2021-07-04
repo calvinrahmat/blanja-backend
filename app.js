@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 const main = require('./src/main');
 const database = require('./src/configs/db');
-const PORT = 7000;
+const PORT = 7123;
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

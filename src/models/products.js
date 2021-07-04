@@ -13,24 +13,10 @@ productDB.getAll = () => {
 	});
 };
 
-productDB.addData = (data) => {
+productDB.filterCategory = () => {
 	return new Promise((resolve, reject) => {
-		db.query('INSERT INTO tutorial (name, price) VALUES ($1, $2)', [
-			data.name,
-			data.price,
-		])
-			.then((res) => {
-				resolve(data);
-			})
-			.catch((err) => {
-				reject(err);
-			});
-	});
-};
-
-productDB.filterCategory = (id) => {
-	return new Promise((resolve, reject) => {
-		db.query(`SELECT * FROM public.fashion WHERE id = ${id}`)
+		const kategori = 1;
+		db.query(`SELECT * FROM public.fashion WHERE Kategori_id = ${kategori}`)
 			.then((res) => {
 				resolve(res.rows);
 			})

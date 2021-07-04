@@ -12,7 +12,7 @@ productsMethod.getAll = async (req, res) => {
 
 productsMethod.getCategory = async (req, res) => {
 	try {
-		const response = await modelProduct.filterCategory(req.params.category);
+		const response = await modelProduct.filterCategory(req.params.id);
 		res.send(response);
 	} catch (error) {
 		res.send(error);

@@ -28,9 +28,9 @@ productDB.addData = (data) => {
 	});
 };
 
-productDB.filterCategory = (category) => {
+productDB.filterCategory = (id) => {
 	return new Promise((resolve, reject) => {
-		db.query(`SELECT * FROM public.fashion WHERE kategori = ${category}`)
+		db.query(`SELECT * FROM public.fashion WHERE id = ${id}`)
 			.then((res) => {
 				resolve(res.rows);
 			})

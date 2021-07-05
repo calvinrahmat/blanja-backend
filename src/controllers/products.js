@@ -22,7 +22,7 @@ productsMethod.getCategory = async (req, res) => {
 
 productsMethod.searchData = async (req, res) => {
 	try {
-		const result = await modelProduct.search(req.params.nama);
+		const result = await modelProduct.search(req.query.p);
 		handler(res, 200, result);
 	} catch (error) {
 		handler(res, 400, error);

@@ -13,30 +13,29 @@ productDB.getAll = () => {
 	});
 };
 
-productDB.filterCategory = (kategori) => {
+productDB.filterCategory = (cat_id) => {
 	return new Promise((resolve, reject) => {
-		db.query(
-			'SELECT * FROM public.fashion WHERE kategori = $1 ORDER BY id DESC',
-			[kategori]
-		)
+		db.query(`SELECT * FROM public.fashion WHERE kategori_id = ${cat_id}`)
 			.then((res) => {
 				resolve(res.rows);
 			})
 			.catch((err) => {
+				console.log(err);
 				reject(err);
 			});
 	});
 };
 
-productDB.search = (nama) => {
+productDB.search = (key) => {
 	return new Promise((resolve, reject) => {
-		db.query('SELECT * FROM public.fashion WHERE POSITION ( $1 IN nama) > 0', [
-			nama,
+		db.query('SELECT * FROM public.fashion WHERE nama ILIKE $1', [
+			'%' + key + '%',
 		])
 			.then((res) => {
 				resolve(res.rows);
 			})
 			.catch((err) => {
+				console.log(err);
 				reject(err);
 			});
 	});
@@ -92,7 +91,7 @@ productDB.sortNameDesc = () => {
 productDB.addItem = (data) => {
 	return new Promise((resolve, reject) => {
 		db.query(
-			'INSERT INTO bag (nama,seller,harga,id,qty) SELECT nama,seller,harga,id,$1 FROM fashion WHERE id = $2',
+			'INSERT INTO bag (nama,seller,harga,id,img,qty) SELECT nama,seller,harga,id,img,$1 FROM fashion WHERE id = $2',
 			[data.qty, data.id]
 		)
 			.then((res) => {
@@ -107,3 +106,4 @@ productDB.addItem = (data) => {
 module.exports = productDB;
 
 //INSERT INTO bag (nama,seller,harga,id) SELECT nama,seller,harga,id FROM fashion WHERE id = 90
+//SELECT * FROM public.fashion WHERE POSITION ( $1 IN kategori) > 0

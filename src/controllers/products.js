@@ -13,7 +13,7 @@ productsMethod.getAll = async (req, res) => {
 
 productsMethod.getCategory = async (req, res) => {
 	try {
-		const result = await modelProduct.filterCategory(req.params.kategori);
+		const result = await modelProduct.filterCategory(req.params.kategori_id);
 		handler(res, 200, result);
 	} catch (error) {
 		handler(res, 400, error);

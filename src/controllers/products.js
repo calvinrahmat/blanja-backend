@@ -1,66 +1,76 @@
 const productsMethod = {};
 const modelProduct = require('../models/products');
+const handler = require('../helpers/errorhandler');
 
 productsMethod.getAll = async (req, res) => {
 	try {
-		const response = await modelProduct.getAll();
-		res.send(response);
+		const result = await modelProduct.getAll();
+		handler(res, 200, result);
 	} catch (error) {
-		res.send(error);
+		handler(res, 400, error);
 	}
 };
 
 productsMethod.getCategory = async (req, res) => {
 	try {
-		const response = await modelProduct.filterCategory(req.params.kategori);
-		res.send(response);
+		const result = await modelProduct.filterCategory(req.params.kategori);
+		handler(res, 200, result);
 	} catch (error) {
-		res.send(error);
+		handler(res, 400, error);
 	}
 };
 
 productsMethod.searchData = async (req, res) => {
 	try {
-		const response = await modelProduct.search(req.params.nama);
-		res.send(response);
+		const result = await modelProduct.search(req.params.nama);
+		handler(res, 200, result);
 	} catch (error) {
-		res.send(error);
+		handler(res, 400, error);
 	}
 };
 
 productsMethod.sortByPriceDescending = async (req, res) => {
 	try {
-		const response = await modelProduct.sortPriceDesc();
-		res.send(response);
+		const result = await modelProduct.sortPriceDesc();
+		handler(res, 200, result);
 	} catch (error) {
-		res.send(error);
+		handler(res, 400, error);
 	}
 };
 
 productsMethod.sortByPriceAscending = async (req, res) => {
 	try {
-		const response = await modelProduct.sortPriceAsc();
-		res.send(response);
+		const result = await modelProduct.sortPriceAsc();
+		handler(res, 200, result);
 	} catch (error) {
-		res.send(error);
+		handler(res, 400, error);
 	}
 };
 
 productsMethod.sortByNameAscending = async (req, res) => {
 	try {
-		const response = await modelProduct.sortNameAsc();
-		res.send(response);
+		const result = await modelProduct.sortNameAsc();
+		handler(res, 200, result);
 	} catch (error) {
-		res.send(error);
+		handler(res, 400, error);
 	}
 };
 
 productsMethod.sortByNameDescending = async (req, res) => {
 	try {
-		const response = await modelProduct.sortNameDesc();
-		res.send(response);
+		const result = await modelProduct.sortNameDesc();
+		handler(res, 200, result);
 	} catch (error) {
-		res.send(error);
+		handler(res, 400, error);
+	}
+};
+
+productsMethod.addToBag = async (req, res) => {
+	try {
+		const result = await modelProduct.addItem(req.body);
+		handler(res, 200, result);
+	} catch (error) {
+		handler(res, 400, error);
 	}
 };
 

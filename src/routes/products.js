@@ -9,5 +9,6 @@ router.get('/sort/PriceDesc', ctrlProducts.sortByPriceDescending);
 router.get('/sort/PriceAsc', ctrlProducts.sortByPriceAscending);
 router.get('/sort/NameAsc', ctrlProducts.sortByNameAscending);
 router.get('/sort/NameDesc', ctrlProducts.sortByNameDescending);
+router.post('/addToBag', ctrlProducts.addToBag);
 
 module.exports = router;

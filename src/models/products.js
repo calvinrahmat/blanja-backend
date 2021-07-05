@@ -89,5 +89,21 @@ productDB.sortNameDesc = () => {
 			});
 	});
 };
+productDB.addItem = (data) => {
+	return new Promise((resolve, reject) => {
+		db.query(
+			'INSERT INTO bag (nama,seller,harga,id,qty) SELECT nama,seller,harga,id,$1 FROM fashion WHERE id = $2',
+			[data.qty, data.id]
+		)
+			.then((res) => {
+				resolve(data);
+			})
+			.catch((err) => {
+				reject(err);
+			});
+	});
+};
 
 module.exports = productDB;
+
+//INSERT INTO bag (nama,seller,harga,id) SELECT nama,seller,harga,id FROM fashion WHERE id = 90

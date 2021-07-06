@@ -21,6 +21,7 @@
         <li><a href="#built-with">Built With</a></li>
       </ul>
     </li>
+    <li><a href="#installation">Installation</a></li>
     <li><a href="#usage">Usage</a></li>
     <li><a href="#contact">Contact</a></>
   </ol>
@@ -29,8 +30,6 @@
 <!-- ABOUT THE PROJECT -->
 
 ## About The Project
-
-[![Product Name Screen Shot][product-screenshot]]
 
 This project is about how to build Rest API with Node, Express JS and PostgresSQL ( Beginner Level ).
 

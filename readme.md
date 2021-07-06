@@ -66,12 +66,6 @@ First thing to do you must configure your database to match the database config 
 
 _For more examples, please refer to the [Documentation](https://example.com)_
 
-<!-- LICENSE -->
-
-## License
-
-Distributed under the MIT License. See `LICENSE` for more information.
-
 <!-- CONTACT -->
 
 ## Contact

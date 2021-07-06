@@ -1,6 +1,7 @@
 const productsMethod = {};
 const modelProduct = require('../models/products');
 const handler = require('../helpers/errorhandler');
+const url = require('url');
 
 productsMethod.getAll = async (req, res) => {
 	try {
@@ -25,41 +26,44 @@ productsMethod.searchData = async (req, res) => {
 		const result = await modelProduct.search(req.query.p);
 		handler(res, 200, result);
 	} catch (error) {
+		console.log(error);
 		handler(res, 400, error);
 	}
 };
 
-productsMethod.sortByPriceDescending = async (req, res) => {
+productsMethod.sort = async (req, res) => {
 	try {
-		const result = await modelProduct.sortPriceDesc();
-		handler(res, 200, result);
-	} catch (error) {
-		handler(res, 400, error);
-	}
-};
-
-productsMethod.sortByPriceAscending = async (req, res) => {
-	try {
-		const result = await modelProduct.sortPriceAsc();
-		handler(res, 200, result);
-	} catch (error) {
-		handler(res, 400, error);
-	}
-};
-
-productsMethod.sortByNameAscending = async (req, res) => {
-	try {
-		const result = await modelProduct.sortNameAsc();
-		handler(res, 200, result);
-	} catch (error) {
-		handler(res, 400, error);
-	}
-};
-
-productsMethod.sortByNameDescending = async (req, res) => {
-	try {
-		const result = await modelProduct.sortNameDesc();
-		handler(res, 200, result);
+		const currentUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
+		const fullUrl = new URL(currentUrl);
+		const searchParams = fullUrl.searchParams;
+		const key = searchParams.get('ob');
+		console.log(key);
+		if (key == 1) {
+			const result = await modelProduct.sortPriceExpensive();
+			handler(res, 200, result);
+		}
+		if (key == 2) {
+			const result = await modelProduct.sortPriceCheapest();
+			handler(res, 200, result);
+		}
+		if (key == 3) {
+			const result = await modelProduct.sortNameAsc();
+			handler(res, 200, result);
+		}
+		if (key == 4) {
+			const result = await modelProduct.sortNameDesc();
+			handler(res, 200, result);
+		}
+		if (key == 5) {
+			const result = await modelProduct.sortNewest();
+			handler(res, 200, result);
+		}
+		if (key == 6) {
+			const result = await modelProduct.sortOldest();
+			handler(res, 200, result);
+		} else {
+			res.send('no sorting available');
+		}
 	} catch (error) {
 		handler(res, 400, error);
 	}

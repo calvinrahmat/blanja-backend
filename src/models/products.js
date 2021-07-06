@@ -41,7 +41,31 @@ productDB.search = (key) => {
 	});
 };
 
-productDB.sortPriceDesc = () => {
+productDB.sortNewest = () => {
+	return new Promise((resolve, reject) => {
+		db.query('SELECT * FROM public.fashion ORDER BY id DESC')
+			.then((res) => {
+				resolve(res.rows);
+			})
+			.catch((err) => {
+				reject(err);
+			});
+	});
+};
+
+productDB.sortOldest = () => {
+	return new Promise((resolve, reject) => {
+		db.query('SELECT * FROM public.fashion ORDER BY id')
+			.then((res) => {
+				resolve(res.rows);
+			})
+			.catch((err) => {
+				reject(err);
+			});
+	});
+};
+
+productDB.sortPriceExpensive = () => {
 	return new Promise((resolve, reject) => {
 		db.query('SELECT * FROM public.fashion ORDER BY harga DESC')
 			.then((res) => {
@@ -53,7 +77,7 @@ productDB.sortPriceDesc = () => {
 	});
 };
 
-productDB.sortPriceAsc = () => {
+productDB.sortPriceCheapest = () => {
 	return new Promise((resolve, reject) => {
 		db.query('SELECT * FROM public.fashion ORDER BY harga')
 			.then((res) => {
@@ -104,6 +128,3 @@ productDB.addItem = (data) => {
 };
 
 module.exports = productDB;
-
-//INSERT INTO bag (nama,seller,harga,id) SELECT nama,seller,harga,id FROM fashion WHERE id = 90
-//SELECT * FROM public.fashion WHERE POSITION ( $1 IN kategori) > 0

@@ -68,12 +68,12 @@ This project is about how to build Rest API with Node, Express JS and PostgresSQ
 
 First thing to do you must configure your database to match the database config in this project or you can create new configuration for your own database. After that you should download POSTMAN to send request and also monitoring. You can use these request to make thing easier :relaxed:
 
-_Pslease refer to the [Documentation](https://documenter.getpostman.com/view/16482670/Tzm3nHTf)_
+_Please refer to the [Post Documentation](https://documenter.getpostman.com/view/16482670/Tzm3nHTf)_
 
 <!-- CONTACT -->
 
 ## Contact
 
-Linked - [https://www.linkedin.com/in/calvin-rahmat](https://www.linkedin.com/in/calvin-rahmat) - email
+LinkedIn - [https://www.linkedin.com/in/calvin-rahmat](https://www.linkedin.com/in/calvin-rahmat)
 
 Project Link: [https://github.com/github_username/repo_name](https://github.com/github_username/repo_name)

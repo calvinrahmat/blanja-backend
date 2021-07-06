@@ -29,4 +29,13 @@ bagMethod.totalPrice = async (req, res) => {
 	}
 };
 
+bagMethod.updateQuantity = async (req, res) => {
+	try {
+		const result = await modelBag.updateQty(req.body);
+		handler(res, 200, result);
+	} catch (error) {
+		handler(res, 400, error);
+	}
+};
+
 module.exports = bagMethod;

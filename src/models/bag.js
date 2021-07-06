@@ -16,9 +16,28 @@ mybagDB.getAll = () => {
 
 mybagDB.delete = (item) => {
 	return new Promise((resolve, reject) => {
-		db.query('DELETE FROM bag WHERE id = $1', [item.id])
+		db.query('select exists(select 1 from bag where id=$1) AS delete', [
+			item.id,
+		])
 			.then((res) => {
-				resolve(res);
+				db.query('DELETE FROM bag WHERE id = $1', [item.id]);
+				resolve(res.rows);
+			})
+			.catch((err) => {
+				console.log(err);
+				reject(err);
+			});
+	});
+};
+
+mybagDB.updateQty = (item) => {
+	return new Promise((resolve, reject) => {
+		db.query('select exists(select 1 from bag where id=$1) AS update', [
+			item.id,
+		])
+			.then((res) => {
+				db.query('UPDATE bag SET qty = $1 where id =$2', [item.qty, item.id]);
+				resolve(res.rows);
 			})
 			.catch((err) => {
 				reject(err);

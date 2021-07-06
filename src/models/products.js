@@ -1,3 +1,5 @@
+const { json } = require('body-parser');
+const { exists } = require('fs');
 const db = require('../configs/db');
 const productDB = {};
 
@@ -122,6 +124,25 @@ productDB.addItem = (data) => {
 				resolve(data);
 			})
 			.catch((err) => {
+				reject(err);
+			});
+	});
+};
+
+productDB.changeRating = (data) => {
+	return new Promise((resolve, reject) => {
+		db.query('select exists(select 1 from fashion where id=$1) AS update', [
+			data.id,
+		])
+			.then((res) => {
+				db.query('UPDATE fashion SET rating = $1 where id = $2', [
+					data.rating,
+					data.id,
+				]);
+				resolve(res.rows);
+			})
+			.catch((err) => {
+				console.log(err);
 				reject(err);
 			});
 	});

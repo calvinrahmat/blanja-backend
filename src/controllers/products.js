@@ -34,7 +34,6 @@ productsMethod.searchData = async (req, res) => {
 productsMethod.sort = async (req, res) => {
 	try {
 		const key = req.query.ob;
-		console.log(key);
 		if (key == 1) {
 			const result = await modelProduct.sortPriceExpensive();
 			handler(res, 200, result);
@@ -69,6 +68,15 @@ productsMethod.sort = async (req, res) => {
 productsMethod.addToBag = async (req, res) => {
 	try {
 		const result = await modelProduct.addItem(req.body);
+		handler(res, 200, result);
+	} catch (error) {
+		handler(res, 400, error);
+	}
+};
+
+productsMethod.updateRating = async (req, res) => {
+	try {
+		const result = await modelProduct.changeRating(req.body);
 		handler(res, 200, result);
 	} catch (error) {
 		handler(res, 400, error);

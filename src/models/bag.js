@@ -3,11 +3,12 @@ const mybagDB = {};
 
 mybagDB.getAll = () => {
 	return new Promise((resolve, reject) => {
-		db.query('SELECT * FROM bag')
+		db.query('SELECT *, harga * qty AS total FROM bag')
 			.then((res) => {
 				resolve(res.rows);
 			})
 			.catch((err) => {
+				console.log(err);
 				reject(err);
 			});
 	});
@@ -28,9 +29,9 @@ mybagDB.total = () => {
 
 mybagDB.delete = (item) => {
 	return new Promise((resolve, reject) => {
-		db.query('DELETE FROM bag WHERE id = CAST($1 AS varchar)', [item.id])
+		db.query('DELETE FROM bag WHERE id = $1', [item.id])
 			.then((res) => {
-				resolve(res.rows);
+				resolve(res);
 			})
 			.catch((err) => {
 				reject(err);
@@ -39,7 +40,3 @@ mybagDB.delete = (item) => {
 };
 
 module.exports = mybagDB;
-
-//'SELECT * FROM public.bag ORDER BY id DESC'
-//'INSERT INTO bag(total) SELECT SUM(harga) FROM public.bag ',
-//SELECT NAME, (CAST (harga AS INT) * CAST (qty AS INT)) AS total FROM public.bag'

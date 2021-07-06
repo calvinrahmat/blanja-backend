@@ -1,30 +1,31 @@
 const bagMethod = {};
 const modelBag = require('../models/bag');
+const handler = require('../helpers/errorhandler');
 
 bagMethod.getAll = async (req, res) => {
 	try {
-		const response = await modelBag.getAll();
-		res.send(response);
+		const result = await modelBag.getAll();
+		handler(res, 200, result);
 	} catch (error) {
-		res.send(error);
+		handler(res, 400, error);
 	}
 };
 
 bagMethod.deleteItem = async (req, res) => {
 	try {
-		const response = await modelBag.delete(req.body);
-		res.send(response);
+		const result = await modelBag.delete(req.body);
+		handler(res, 200, result);
 	} catch (error) {
-		res.send(error);
+		handler(res, 400, error);
 	}
 };
 
 bagMethod.totalPrice = async (req, res) => {
 	try {
-		const response = await modelBag.total();
-		res.send(response);
+		const result = await modelBag.total();
+		handler(res, 200, result);
 	} catch (error) {
-		res.send(error);
+		handler(res, 400, error);
 	}
 };
 

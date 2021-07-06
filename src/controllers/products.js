@@ -1,7 +1,6 @@
 const productsMethod = {};
 const modelProduct = require('../models/products');
 const handler = require('../helpers/errorhandler');
-const url = require('url');
 
 productsMethod.getAll = async (req, res) => {
 	try {
@@ -24,6 +23,7 @@ productsMethod.getCategory = async (req, res) => {
 productsMethod.searchData = async (req, res) => {
 	try {
 		const result = await modelProduct.search(req.query.p);
+		console.log(req.query.p);
 		handler(res, 200, result);
 	} catch (error) {
 		console.log(error);
@@ -33,10 +33,7 @@ productsMethod.searchData = async (req, res) => {
 
 productsMethod.sort = async (req, res) => {
 	try {
-		const currentUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
-		const fullUrl = new URL(currentUrl);
-		const searchParams = fullUrl.searchParams;
-		const key = searchParams.get('ob');
+		const key = req.query.ob;
 		console.log(key);
 		if (key == 1) {
 			const result = await modelProduct.sortPriceExpensive();

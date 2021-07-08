@@ -22,11 +22,20 @@ productsMethod.getCategory = async (req, res) => {
 
 productsMethod.searchData = async (req, res) => {
 	try {
-		const result = await modelProduct.search(req.query.p);
 		console.log(req.query.p);
+		const result = await modelProduct.search(req.query.p);
 		handler(res, 200, result);
 	} catch (error) {
-		console.log(error);
+		handler(res, 400, error);
+	}
+};
+
+productsMethod.filterSeller = async (req, res) => {
+	try {
+		console.log(req.query.st);
+		const result = await modelProduct.search(req.query.st);
+		handler(res, 200, result);
+	} catch (error) {
 		handler(res, 400, error);
 	}
 };
@@ -67,17 +76,37 @@ productsMethod.sort = async (req, res) => {
 
 productsMethod.addToBag = async (req, res) => {
 	try {
-		const result = await modelProduct.addItem(req.body);
+		const result = await modelProduct.addItemBag(req.body);
 		handler(res, 200, result);
 	} catch (error) {
 		handler(res, 400, error);
 	}
 };
 
-productsMethod.updateRating = async (req, res) => {
+productsMethod.updateProduct = async (req, res) => {
 	try {
-		const result = await modelProduct.changeRating(req.body);
+		const result = await modelProduct.changeProduct(req.body);
 		handler(res, 200, result);
+	} catch (error) {
+		handler(res, 400, error);
+	}
+};
+
+productsMethod.deleteProduct = async (req, res) => {
+	try {
+		console.log(req.query.id);
+		const result = await modelProduct.delete(req.query.id);
+		handler(res, 200, result);
+	} catch (error) {
+		handler(res, 400, error);
+	}
+};
+
+productsMethod.addToProduct = async (req, res) => {
+	try {
+		const result = await modelProduct.addProduct(req.body);
+
+		handler(res, 200, console.log(result));
 	} catch (error) {
 		handler(res, 400, error);
 	}

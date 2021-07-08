@@ -13,7 +13,7 @@ bagMethod.getAll = async (req, res) => {
 
 bagMethod.deleteItem = async (req, res) => {
 	try {
-		const result = await modelBag.delete(req.body);
+		const result = await modelBag.delete(req.query.id);
 		handler(res, 200, result);
 	} catch (error) {
 		handler(res, 400, error);

@@ -20,7 +20,6 @@ sellerMethod.sellerRegistration = async (req, res) => {
 sellerMethod.resetPassword = async (req, res) => {
 	try {
 		const check = await modelSeller.getByEmail(req.body.email);
-		console.log(check);
 		if (check.length <= 0) {
 			return handler(res, 200, { msg: 'email tidak terdaftar !' });
 		}
@@ -28,7 +27,6 @@ sellerMethod.resetPassword = async (req, res) => {
 		console.log(result);
 		return handler(res, 200, result);
 	} catch (error) {
-		console.log(error);
 		return handler(res, 500, error, true);
 	}
 };

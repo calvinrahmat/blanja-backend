@@ -5,12 +5,14 @@ const bag = require('./routes/bag');
 const category = require('./routes/category');
 const users = require('./routes/users');
 const seller = require('./routes/seller');
+const login = require('./routes/login');
 
 router.use('/products', products);
 router.use('/bag', bag);
 router.use('/category', category);
 router.use('/user', users);
 router.use('/seller', seller);
+router.use('/login', login);
 router.use('*', (req, res) => {
 	res.send('page not found');
 });

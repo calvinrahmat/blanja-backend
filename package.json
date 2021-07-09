@@ -1,0 +1,30 @@
+{
+  "name": "Tugas_RestApi",
+  "version": "1.0.0",
+  "description": "<h1 align=\"center\">   Introduction Restfull Api with ExpressJS and PostgresSQL </h1>",
+  "main": "app.js",
+  "dependencies": {
+    "bcrypt": "^5.0.1",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "morgan": "^1.10.0",
+    "nodemon": "^2.0.9",
+    "pg": "^8.6.0",
+    "redis": "^3.1.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/calvinrahmat/https---github.com-calvinrahmat-RestApiBeginner.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/calvinrahmat/https---github.com-calvinrahmat-RestApiBeginner/issues"
+  },
+  "homepage": "https://github.com/calvinrahmat/https---github.com-calvinrahmat-RestApiBeginner#readme"
+}

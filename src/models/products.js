@@ -163,7 +163,6 @@ productDB.changeProduct = (data) => {
 				resolve(res.rows);
 			})
 			.catch((err) => {
-				console.log(err);
 				reject(err);
 			});
 	});

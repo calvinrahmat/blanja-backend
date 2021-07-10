@@ -37,4 +37,13 @@ userMethod.resetPassword = async (req, res) => {
 	}
 };
 
+userMethod.getAll = async (req, res) => {
+	try {
+		const result = await modelUser.getAll();
+		handler(res, 200, result);
+	} catch (error) {
+		handler(res, 400, error);
+	}
+};
+
 module.exports = userMethod;

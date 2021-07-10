@@ -44,4 +44,17 @@ usersDB.addPass = (data) => {
 	});
 };
 
+usersDB.getAll = () => {
+	return new Promise((resolve, reject) => {
+		db.query('SELECT * FROM users ORDER BY user_id DESC ')
+			.then((res) => {
+				resolve(res.rows);
+			})
+			.catch((err) => {
+				console.log(err);
+				reject(err);
+			});
+	});
+};
+
 module.exports = usersDB;

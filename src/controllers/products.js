@@ -85,7 +85,16 @@ productsMethod.addToBag = async (req, res) => {
 
 productsMethod.updateProduct = async (req, res) => {
 	try {
-		const result = await modelProduct.changeProduct(req.body);
+		const data = {
+			nama: req.body.nama,
+			seller: req.body.seller,
+			kategori: req.body.kategori,
+			harga: req.body.harga,
+			kategori_id: req.body.kategori_id,
+			img: req.file.path,
+		};
+
+		const result = await modelProduct.changeProduct(data);
 		handler(res, 200, result);
 	} catch (error) {
 		handler(res, 400, error);
@@ -104,10 +113,19 @@ productsMethod.deleteProduct = async (req, res) => {
 
 productsMethod.addToProduct = async (req, res) => {
 	try {
-		const result = await modelProduct.addProduct(req.body);
+		const data = {
+			nama: req.body.nama,
+			seller: req.body.seller,
+			kategori: req.body.kategori,
+			harga: req.body.harga,
+			kategori_id: req.body.kategori_id,
+			img: req.file.path,
+		};
 
+		const result = await modelProduct.addProduct(data);
 		handler(res, 200, console.log(result));
 	} catch (error) {
+		console.log(error);
 		handler(res, 400, error);
 	}
 };

@@ -136,6 +136,7 @@ productDB.addItemBag = (data) => {
 			[data.qty, data.id]
 		)
 			.then((res) => {
+				console.log(data);
 				resolve(data);
 			})
 			.catch((err) => {
@@ -147,20 +148,20 @@ productDB.addItemBag = (data) => {
 productDB.changeProduct = (data) => {
 	return new Promise((resolve, reject) => {
 		db.query(
-			'UPDATE fashion SET nama = $1, seller = $2, kategori = $3, kategori_id = $4, harga = $5, rating = $6, img = $7 WHERE id = $8',
+			'UPDATE fashion SET nama = $1, seller = $2, kategori = $3, kategori_id = $4, harga = $5, img = $6 WHERE id = $7',
 			[
 				data.nama,
 				data.seller,
 				data.kategori,
 				data.kategori_id,
 				data.harga,
-				data.rating,
 				data.img,
 				data.id,
 			]
 		)
 			.then((res) => {
-				resolve(res.rows);
+				console.log(data);
+				resolve({ msg: 'data updated!' });
 			})
 			.catch((err) => {
 				reject(err);
@@ -198,14 +199,13 @@ productDB.delete = (data) => {
 productDB.addProduct = (data) => {
 	return new Promise((resolve, reject) => {
 		db.query(
-			'INSERT INTO fashion (nama,seller,kategori,kategori_id,harga,rating,img) VALUES ($1,$2,$3,$4,$5,$6,$7)',
+			'INSERT INTO fashion (nama,seller,kategori,kategori_id,harga,img) VALUES ($1,$2,$3,$4,$5,$6)',
 			[
 				data.nama,
 				data.seller,
 				data.kategori,
 				data.kategori_id,
 				data.harga,
-				data.rating,
 				data.img,
 			]
 		)

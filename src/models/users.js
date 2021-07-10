@@ -29,4 +29,19 @@ usersDB.getByEmail = (email) => {
 	});
 };
 
+usersDB.addPass = (data) => {
+	return new Promise((resolve, reject) => {
+		db.query(
+			`UPDATE public.users SET pass='${data.pass}' where email='${data.email}'`
+		)
+			.then((res) => {
+				console.log(res);
+				resolve(res);
+			})
+			.catch((err) => {
+				reject(err);
+			});
+	});
+};
+
 module.exports = usersDB;

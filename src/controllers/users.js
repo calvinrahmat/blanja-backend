@@ -23,4 +23,18 @@ userMethod.userRegistration = async (req, res) => {
 	}
 };
 
+userMethod.resetPassword = async (req, res) => {
+	try {
+		const check = await modelUser.getByEmail(req.body.email);
+		if (check.length <= 0) {
+			return handler(res, 200, { msg: 'email tidak terdaftar !' });
+		}
+		const result = await modelUser.addPass(req.body);
+		console.log(result);
+		return handler(res, 200, result);
+	} catch (error) {
+		return handler(res, 500, error, true);
+	}
+};
+
 module.exports = userMethod;

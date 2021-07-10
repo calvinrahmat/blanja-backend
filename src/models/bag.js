@@ -1,7 +1,7 @@
 const db = require('../configs/db');
-const mybagDB = {};
+const myBagDB = {};
 
-mybagDB.getAll = () => {
+myBagDB.getAll = () => {
 	return new Promise((resolve, reject) => {
 		db.query('SELECT *, harga * qty AS total FROM bag ORDER BY ID DESC ')
 			.then((res) => {
@@ -14,7 +14,7 @@ mybagDB.getAll = () => {
 	});
 };
 
-mybagDB.delete = (item) => {
+myBagDB.delete = (item) => {
 	return new Promise((resolve, reject) => {
 		db.query('select exists(select 1 from bag where id=$1) AS delete', [item])
 			.then((res) => {
@@ -27,7 +27,7 @@ mybagDB.delete = (item) => {
 	});
 };
 
-mybagDB.updateQty = (item) => {
+myBagDB.updateQty = (item) => {
 	return new Promise((resolve, reject) => {
 		db.query('select exists(select 1 from bag where id=$1) AS update', [
 			item.id,
@@ -42,4 +42,4 @@ mybagDB.updateQty = (item) => {
 	});
 };
 
-module.exports = mybagDB;
+module.exports = myBagDB;

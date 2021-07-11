@@ -6,7 +6,9 @@ const category = require('./routes/category');
 const users = require('./routes/users');
 const seller = require('./routes/seller');
 const login = require('./routes/login');
+const { cloudConfig } = require('./configs/cloudinary');
 
+router.use('*', cloudConfig);
 router.use('/products', products);
 router.use('/bag', bag);
 router.use('/category', category);

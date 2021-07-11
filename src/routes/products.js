@@ -3,8 +3,9 @@ const router = express.Router();
 const ctrlProducts = require('../controllers/products');
 const validate = require('../middleware/validate');
 const uploads = require('../middleware/upload');
+const cache = require('../middleware/cache');
 
-router.get('/', ctrlProducts.getAll);
+router.get('/', cache.productCache, ctrlProducts.getAllProducts);
 router.get('/Kategori/:kategori_id', ctrlProducts.getCategory);
 router.get('/search/nama', ctrlProducts.searchData);
 router.get('/search/seller', ctrlProducts.filterSeller);

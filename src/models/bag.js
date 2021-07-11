@@ -1,7 +1,7 @@
 const db = require('../configs/db');
 const myBagDB = {};
 
-myBagDB.getAll = () => {
+myBagDB.getAllBag = () => {
 	return new Promise((resolve, reject) => {
 		db.query('SELECT *, harga * qty AS total FROM bag ORDER BY ID DESC ')
 			.then((res) => {

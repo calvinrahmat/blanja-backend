@@ -1,10 +1,15 @@
 const productsMethod = {};
 const modelProduct = require('../models/products');
 const handler = require('../helpers/errorhandler');
+const uploadToCloudinary = require('../helpers/upload_cloud');
+const { redisDb } = require('../configs/redis');
 
-productsMethod.getAll = async (req, res) => {
+productsMethod.getAllProducts = async (req, res) => {
 	try {
 		const result = await modelProduct.getAll();
+		const data = JSON.stringify(result);
+		console.log('data dari postgre');
+		redisDb.setex('products', 20, data);
 		handler(res, 200, result);
 	} catch (error) {
 		handler(res, 400, error);
@@ -113,17 +118,22 @@ productsMethod.deleteProduct = async (req, res) => {
 
 productsMethod.addToProduct = async (req, res) => {
 	try {
+		let urlImage = '';
+		if (req.file !== undefined) {
+			urlImage = await uploadToCloudinary(req.file.path);
+		}
 		const data = {
 			nama: req.body.nama,
 			seller: req.body.seller,
 			kategori: req.body.kategori,
 			harga: req.body.harga,
 			kategori_id: req.body.kategori_id,
-			img: req.file.path,
+			img: urlImage || req.file.path,
 		};
 
 		const result = await modelProduct.addProduct(data);
-		handler(res, 200, console.log(result));
+		redisDb.del('product');
+		handler(res, 200, result);
 	} catch (error) {
 		console.log(error);
 		handler(res, 400, error);

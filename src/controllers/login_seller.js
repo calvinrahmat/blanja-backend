@@ -26,7 +26,6 @@ loginMethod.login = async (req, res) => {
 	try {
 		const passDB = await modelSeller.getByEmail(req.body.email);
 		const passUser = req.body.pass;
-		console.log(passUser);
 		const check = await bcrypt.compare(passUser, passDB[0].pass);
 		if (check) {
 			const result = await token(req.body.email);

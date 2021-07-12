@@ -16,7 +16,7 @@ class Redis {
 				}
 
 				if (res == 'OK' || res == null) {
-					resolve('Connection to redis established');
+					resolve('Connection to Redis established');
 				}
 			});
 		});

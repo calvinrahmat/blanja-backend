@@ -1,5 +1,6 @@
 const handler = require('../helpers/errorhandler');
 const { redisDb } = require('../configs/redis');
+const logger = require('../helpers/logger');
 
 const getAllProductsFromCache = (req, res, next) => {
 	redisDb.get('products', (err, data) => {
@@ -8,7 +9,7 @@ const getAllProductsFromCache = (req, res, next) => {
 		}
 		if (data !== null) {
 			const result = JSON.parse(data);
-			console.log('data dari redis');
+			logger.debug('data dari redis');
 			return handler(res, 200, result);
 		} else {
 			next();
@@ -23,7 +24,7 @@ const getAllBagFromCache = (req, res, next) => {
 		}
 		if (data !== null) {
 			const result = JSON.parse(data);
-			console.log('data dari redis');
+			logger.debug('data dari redis');
 			return handler(res, 200, result);
 		} else {
 			next();

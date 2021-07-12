@@ -3,13 +3,14 @@ const modelProduct = require('../models/products');
 const handler = require('../helpers/errorhandler');
 const uploadToCloudinary = require('../helpers/upload_cloud');
 const { redisDb } = require('../configs/redis');
+const logger = require('../helpers/logger');
 
 productsMethod.getAllProducts = async (req, res) => {
 	try {
 		const result = await modelProduct.getAll();
 		const data = JSON.stringify(result);
-		console.log('data dari postgre');
-		redisDb.setex('products', 20, data);
+		logger.debug('data dari postgre');
+		redisDb.set('products', data);
 		handler(res, 200, result);
 	} catch (error) {
 		handler(res, 400, error);
@@ -27,7 +28,6 @@ productsMethod.getCategory = async (req, res) => {
 
 productsMethod.searchData = async (req, res) => {
 	try {
-		console.log(req.query.p);
 		const result = await modelProduct.search(req.query.p);
 		handler(res, 200, result);
 	} catch (error) {
@@ -37,7 +37,7 @@ productsMethod.searchData = async (req, res) => {
 
 productsMethod.filterSeller = async (req, res) => {
 	try {
-		console.log(req.query.st);
+		logger.debug(req.query.st);
 		const result = await modelProduct.search(req.query.st);
 		handler(res, 200, result);
 	} catch (error) {
@@ -71,7 +71,7 @@ productsMethod.sort = async (req, res) => {
 		if (key == 6) {
 			const result = await modelProduct.sortOldest();
 			handler(res, 200, result);
-		} else {
+			l;
 			res.send('no sorting available');
 		}
 	} catch (error) {

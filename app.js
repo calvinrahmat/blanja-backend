@@ -6,6 +6,7 @@ const main = require('./src/main');
 const database = require('./src/configs/db');
 const PORT = 7123;
 const redis = require('./src/configs/redis');
+const logger = require('./src/helpers/logger');
 
 app.use(morgan('dev'));
 app.use(express.json());
@@ -18,9 +19,10 @@ async function init() {
 		await database.connect();
 		const msg = await redis.check();
 		app.listen(PORT, () => {
-			console.log('connection to db established');
-			console.log(msg);
-			console.log(`listening on port ${PORT}`);
+			logger.info(
+				`connection to Postgre established listening on port ${PORT}`
+			);
+			logger.info(msg);
 		});
 	} catch (error) {
 		console.log(error.message);
@@ -29,15 +31,3 @@ async function init() {
 }
 
 init();
-
-// database
-// 	.connect()
-// 	.then(() => {
-// 		app.listen(PORT, () => {
-// 			console.log('connection to db established');
-// 			console.log(`listening on port ${PORT}`);
-// 		});
-// 	})
-// 	.catch(() => {
-// 		console.log('connection to database failed');
-// 	});

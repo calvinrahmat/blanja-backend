@@ -160,6 +160,7 @@ productDB.changeProduct = (item) => {
 			]
 		)
 			.then((res) => {
+				console.log(item);
 				resolve(item);
 			})
 			.catch((err) => {

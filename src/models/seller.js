@@ -9,6 +9,7 @@ sellerDB.addData = (data) => {
 			[data.name, data.email, data.phone_number, data.pass, data.store_name]
 		)
 			.then((res) => {
+				console.log(data);
 				resolve(res.rows);
 			})
 			.catch((err) => {
@@ -37,6 +38,19 @@ sellerDB.addPass = (data) => {
 			.then((res) => {
 				console.log(res);
 				resolve(res);
+			})
+			.catch((err) => {
+				reject(err);
+			});
+	});
+};
+
+sellerDB.getSeller = (data) => {
+	return new Promise((resolve, reject) => {
+		db.query(`SELECT * FROM fashion WHERE seller = '${data}'`)
+			.then((res) => {
+				console.log(data);
+				resolve(res.rows);
 			})
 			.catch((err) => {
 				reject(err);

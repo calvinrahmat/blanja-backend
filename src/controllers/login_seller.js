@@ -31,11 +31,11 @@ loginMethod.login = async (req, res) => {
 			const result = await token(req.body.email);
 			return handler(res, 200, result);
 		} else {
-			return handler(res, 400, { msg: 'Wrong password or email !' });
+			return handler(res, 401, error, true);
 		}
 	} catch (error) {
 		console.log(error);
-		handler(res, 500, error);
+		handler(res, 500, { msg: 'wrong password or email' });
 	}
 };
 

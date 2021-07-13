@@ -2,6 +2,8 @@ const sellerMethod = {};
 const modelSeller = require('../models/seller');
 const handler = require('../helpers/errorhandler');
 const hash = require('../helpers/hash');
+const { redisDb } = require('../configs/redis');
+const uploadToCloudinary = require('../helpers/upload_cloud');
 
 sellerMethod.sellerRegistration = async (req, res) => {
 	try {
@@ -36,6 +38,19 @@ sellerMethod.resetPassword = async (req, res) => {
 		return handler(res, 200, result);
 	} catch (error) {
 		return handler(res, 500, error, true);
+	}
+};
+
+sellerMethod.getProductSeller = async (req, res) => {
+	try {
+		const result = await modelSeller.getSeller(req.params.seller);
+		const data = JSON.stringify(result);
+		console.log('data dari postgre');
+		redisDb.setex('seller', 20, data);
+		handler(res, 200, result);
+	} catch (error) {
+		console.log(error);
+		handler(res, 400, error);
 	}
 };
 

@@ -145,25 +145,25 @@ productDB.addItemBag = (data) => {
 	});
 };
 
-productDB.changeProduct = (data) => {
+productDB.changeProduct = (item) => {
 	return new Promise((resolve, reject) => {
 		db.query(
 			'UPDATE fashion SET nama = $1, seller = $2, kategori = $3, kategori_id = $4, harga = $5, img = $6 WHERE id = $7',
 			[
-				data.nama,
-				data.seller,
-				data.kategori,
-				data.kategori_id,
-				data.harga,
-				data.img,
-				data.id,
+				item.nama,
+				item.seller,
+				item.kategori,
+				item.kategori_id,
+				item.harga,
+				item.img,
+				item.id,
 			]
 		)
 			.then((res) => {
-				console.log(data);
-				resolve({ msg: 'data updated!' });
+				resolve(item);
 			})
 			.catch((err) => {
+				console.log(err);
 				reject(err);
 			});
 	});
@@ -214,6 +214,18 @@ productDB.addProduct = (data) => {
 			})
 			.catch((err) => {
 				console.log(err);
+				reject(err);
+			});
+	});
+};
+
+productDB.getId = (id) => {
+	return new Promise((resolve, reject) => {
+		db.query(`SELECT * FROM fashion WHERE id = ${id}`)
+			.then((res) => {
+				resolve(res.rows);
+			})
+			.catch((err) => {
 				reject(err);
 			});
 	});

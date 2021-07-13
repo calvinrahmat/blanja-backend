@@ -34,6 +34,7 @@ myBagDB.updateQty = (item) => {
 		])
 			.then((res) => {
 				db.query('UPDATE bag SET qty = $1 where id =$2', [item.qty, item.id]);
+				console.log(res.rows);
 				resolve(res.rows);
 			})
 			.catch((err) => {

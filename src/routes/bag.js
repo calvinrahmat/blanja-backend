@@ -6,7 +6,6 @@ const cache = require('../middleware/cache');
 
 router.get('/', validate('customer'), cache.bagCache, ctrlBag.getAll);
 router.delete('/del', validate('customer'), ctrlBag.deleteItem);
-router.get('/total', validate('customer'), ctrlBag.totalPrice);
-router.put('/updateQty', validate('customer'), ctrlBag.updateQuantity);
+router.put('/updateqty', validate('customer'), ctrlBag.updateQuantity);
 
 module.exports = router;

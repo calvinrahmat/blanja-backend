@@ -82,6 +82,7 @@ productsMethod.sort = async (req, res) => {
 productsMethod.addToBag = async (req, res) => {
 	try {
 		const result = await modelProduct.addItemBag(req.body);
+		redisDb.del('product');
 		handler(res, 200, result);
 	} catch (error) {
 		handler(res, 400, error);
@@ -90,18 +91,28 @@ productsMethod.addToBag = async (req, res) => {
 
 productsMethod.updateProduct = async (req, res) => {
 	try {
+		const check = await modelProduct.getId(req.body.id);
+		let urlImage = '';
+		if (check.length <= 0) {
+			return handler(res, 200, { msg: 'wrong product id!' });
+		} else if (req.file !== undefined) {
+			urlImage = await uploadToCloudinary(req.file.path);
+		}
 		const data = {
 			nama: req.body.nama,
 			seller: req.body.seller,
 			kategori: req.body.kategori,
-			harga: req.body.harga,
 			kategori_id: req.body.kategori_id,
-			img: req.file.path,
+			harga: req.body.harga,
+			img: urlImage || req.file.path,
+			id: req.body.id,
 		};
-
+		console.log(data);
 		const result = await modelProduct.changeProduct(data);
+		redisDb.del('product');
 		handler(res, 200, result);
 	} catch (error) {
+		console.log(error);
 		handler(res, 400, error);
 	}
 };
@@ -110,6 +121,7 @@ productsMethod.deleteProduct = async (req, res) => {
 	try {
 		console.log(req.query.id);
 		const result = await modelProduct.delete(req.query.id);
+		redisDb.del('product');
 		handler(res, 200, result);
 	} catch (error) {
 		handler(res, 400, error);

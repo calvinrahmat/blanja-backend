@@ -1,4 +1,5 @@
 const db = require('../configs/db');
+const logger = require('../helpers/logger');
 const sellerDB = {};
 
 sellerDB.addData = (data) => {

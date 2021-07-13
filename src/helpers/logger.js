@@ -1,4 +1,5 @@
 const { createLogger, format, transports, config } = require('winston');
+const { combine, timestamp, printf } = format;
 
 const options = {
 	file: {
@@ -7,7 +8,6 @@ const options = {
 		handleExceptions: true,
 		json: true,
 		maxsize: 5242880, // 5MB
-		maxFiles: 5,
 		colorize: false,
 	},
 	console: {
@@ -18,10 +18,15 @@ const options = {
 	},
 };
 
+const myFormat = printf(({ level, message, timestamp }) => {
+	return `${timestamp} ${level}: ${message}`;
+});
+
 const logger = createLogger({
 	levels: config.npm.levels,
+	format: combine(timestamp(), myFormat),
 	transports: [
-		new transports.File(options.file),
+		new transports.File(options.file, timestamp),
 		new transports.Console(options.console),
 	],
 	exitOnError: false,

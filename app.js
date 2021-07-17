@@ -7,6 +7,7 @@ const database = require('./src/configs/db');
 const PORT = 7123;
 const redis = require('./src/configs/redis');
 const logger = require('./src/helpers/logger');
+const orm = require('./src/configs/sequelize');
 
 app.use(morgan('dev'));
 app.use(express.json());
@@ -31,3 +32,18 @@ async function init() {
 }
 
 init();
+
+async function sequelize() {
+	try {
+		await orm.authenticate();
+		await orm.sync({ alter: true });
+		logger.info('connection to database (sequelize) established');
+	} catch (error) {
+		logger.error(
+			'connection to database (sequelize) sequelize failed: ',
+			error
+		);
+	}
+}
+
+sequelize();

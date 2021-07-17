@@ -4,6 +4,7 @@ const handler = require('../helpers/errorhandler');
 const hash = require('../helpers/hash');
 const { redisDb } = require('../configs/redis');
 const uploadToCloudinary = require('../helpers/upload_cloud');
+const sequelize = require('../configs/db');
 
 sellerMethod.sellerRegistration = async (req, res) => {
 	try {
@@ -20,6 +21,7 @@ sellerMethod.sellerRegistration = async (req, res) => {
 			return handler(res, 200, { msg: 'email sudah terdaftar !' });
 		}
 		const result = await modelSeller.addData(data);
+
 		return handler(res, 200, result);
 	} catch (error) {
 		console.log(error);

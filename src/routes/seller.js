@@ -5,6 +5,7 @@ const cache = require('../middleware/cache');
 const validate = require('../middleware/validate');
 const uploads = require('../middleware/upload');
 const ctrlProduct = require('../controllers/products');
+const ormSeller = require('../controllers/seller-sequelize');
 
 router.post('/registration', ctrlSeller.sellerRegistration);
 router.put('/reset-password', ctrlSeller.resetPassword);
@@ -27,5 +28,6 @@ router.put(
 	uploads.single('img'),
 	ctrlProduct.updateProduct
 );
+router.put('/profile', validate('seller'), ormSeller.updateStore);
 
 module.exports = router;

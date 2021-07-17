@@ -2,9 +2,7 @@ const express = require('express');
 const router = express.Router();
 const ctrlProducts = require('../controllers/products');
 const validate = require('../middleware/validate');
-const uploads = require('../middleware/upload');
 const cache = require('../middleware/cache');
-const logger = require('../helpers/logger');
 
 router.get('/', cache.productCache, ctrlProducts.getAllProducts);
 router.get(
@@ -12,9 +10,9 @@ router.get(
 	cache.productCache,
 	ctrlProducts.getCategory
 );
-router.get('/search/nama', cache.productCache, ctrlProducts.searchData);
-router.get('/search/seller', cache.productCache, ctrlProducts.filterSeller);
-router.get('/sort', cache.productCache, ctrlProducts.sort);
+router.get('/search/nama', ctrlProducts.searchData);
+router.get('/search/seller', ctrlProducts.filterSeller);
+router.get('/sort', ctrlProducts.sort);
 router.post('/addToBag', validate('customer'), ctrlProducts.addToBag);
 
 module.exports = router;

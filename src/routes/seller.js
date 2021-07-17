@@ -28,6 +28,12 @@ router.put(
 	uploads.single('img'),
 	ctrlProduct.updateProduct
 );
-router.put('/profile', validate('seller'), ormSeller.updateStore);
+
+router.put(
+	'/profile',
+	validate('seller'),
+	uploads.single('img'),
+	ormSeller.updateStore
+);
 
 module.exports = router;

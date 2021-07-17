@@ -33,6 +33,10 @@ class Sellers {
 				type: DataTypes.STRING,
 				allowNull: true,
 			},
+			img: {
+				type: DataTypes.STRING,
+				allowNull: true,
+			},
 			createdAt: {
 				type: DataTypes.DATE,
 				allowNull: true,
@@ -45,10 +49,11 @@ class Sellers {
 	}
 	update(data) {
 		return new Promise((resolve, reject) => {
-			const { store_name, email, phone_number, store_desc, seller_id } = data;
+			const { store_name, email, phone_number, store_desc, seller_id, img } =
+				data;
 			this.table
 				.update(
-					{ store_name, email, phone_number, store_desc },
+					{ store_name, email, phone_number, store_desc, img },
 					{
 						where: {
 							seller_id: seller_id,

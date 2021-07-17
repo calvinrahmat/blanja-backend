@@ -45,14 +45,18 @@ class Users {
 				type: DataTypes.DATE,
 				allowNull: true,
 			},
+			img: {
+				type: DataTypes.STRING,
+				allowNullL: true,
+			},
 		});
 	}
 	update(data) {
 		return new Promise((resolve, reject) => {
-			const { dob, address, gender, phone_number, user_id } = data;
+			const { dob, address, gender, phone_number, user_id, img } = data;
 			this.table
 				.update(
-					{ dob, address, gender, phone_number },
+					{ dob, address, gender, phone_number, img },
 					{
 						where: {
 							user_id: user_id,

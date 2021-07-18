@@ -38,7 +38,7 @@ function handler(res, status, result = '') {
 		data: isObject(result) ? [result] : Array.isArray(result) ? result : result,
 	};
 
-	res.status(status).json(results);
+	return res.status(status).json(results);
 }
 
 module.exports = handler;

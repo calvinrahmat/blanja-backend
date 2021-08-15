@@ -13,7 +13,7 @@ const token = async (email) => {
 		const token = jwt.sign(payload, process.env.JWT_KEY, { expiresIn: '1h' });
 		const result = {
 			token: token,
-			msg: 'token created login success !',
+			msg: 'Login Success',
 		};
 
 		return result;
@@ -29,13 +29,12 @@ loginMethod.login = async (req, res) => {
 		const check = await bcrypt.compare(passUser, passDB[0].pass);
 		if (check) {
 			const result = await token(req.body.email);
-			return handler(res, 200, result);
-		} else {
-			return handler(res, 401, error, true);
+			const user = await modelUsers.getByEmail(req.params.email);
+
+			return handler(res, 200, result, user);
 		}
 	} catch (error) {
-		console.log(error);
-		handler(res, 500, { msg: 'Wrong password or email !' });
+		handler(res, 200, { msg: 'Cannot login: wrong password or email' });
 	}
 };
 

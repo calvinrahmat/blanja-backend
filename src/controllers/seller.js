@@ -3,8 +3,6 @@ const modelSeller = require('../models/seller');
 const handler = require('../helpers/errorhandler');
 const hash = require('../helpers/hash');
 const { redisDb } = require('../configs/redis');
-const uploadToCloudinary = require('../helpers/upload_cloud');
-const sequelize = require('../configs/db');
 
 sellerMethod.sellerRegistration = async (req, res) => {
 	try {
@@ -18,10 +16,11 @@ sellerMethod.sellerRegistration = async (req, res) => {
 			pass: hashedPass,
 		};
 		if (check.length > 0) {
-			return handler(res, 200, { msg: 'email sudah terdaftar !' });
+			return handler(res, 200, {
+				msg: 'register failed email already registered',
+			});
 		}
 		const result = await modelSeller.addData(data);
-
 		return handler(res, 200, result);
 	} catch (error) {
 		console.log(error);
@@ -33,11 +32,10 @@ sellerMethod.resetPassword = async (req, res) => {
 	try {
 		const check = await modelSeller.getByEmail(req.body.email);
 		if (check.length <= 0) {
-			return handler(res, 200, { msg: 'email tidak terdaftar !' });
+			return handler(res, 200, { msg: 'email not registered' });
 		}
 		const result = await modelSeller.addPass(req.body);
-		console.log(result);
-		return handler(res, 200, result);
+		return handler(res, 200, { msg: 'reset password successfull' });
 	} catch (error) {
 		return handler(res, 500, error, true);
 	}

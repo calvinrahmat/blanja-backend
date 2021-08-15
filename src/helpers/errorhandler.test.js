@@ -16,7 +16,6 @@ const res = {
 describe('helpers/errorhandler', () => {
 	test(' status code 200 should return OK', () => {
 		const check = handler(res, 200, { msg: 'tes' });
-		console.log(check);
 		const { description } = check.obj;
 		expect(description).toBe('OK');
 	});
@@ -51,7 +50,7 @@ describe('helpers/errorhandler', () => {
 		const { description } = check.obj;
 		expect(description).toBe('Not Modified');
 	});
-	test(' status code 304 should return empty string', () => {
+	test(' should return empty string if status code not registered', () => {
 		const check = handler(res, 600, { msg: 'tes' });
 		const { description } = check.obj;
 		expect(description).toBe('');

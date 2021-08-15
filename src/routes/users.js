@@ -14,5 +14,6 @@ router.put(
 	uploads.single('img'),
 	ormUser.updateProfile
 );
+router.get('/:email', ctrlUser.getUser);
 
 module.exports = router;

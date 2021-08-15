@@ -1,7 +1,7 @@
 const productsMethod = {};
 const modelProduct = require('../models/products');
 const handler = require('../helpers/errorhandler');
-const uploadToCloudinary = require('../helpers/upload_cloud');
+const { uploads } = require('../helpers/upload_cloud');
 const { redisDb } = require('../configs/redis');
 const logger = require('../helpers/logger');
 
@@ -17,11 +17,41 @@ productsMethod.getAllProducts = async (req, res) => {
 	}
 };
 
-productsMethod.getCategory = async (req, res) => {
+productsMethod.getOneProduct = async (req, res) => {
 	try {
-		const result = await modelProduct.filterCategory(req.params.kategori_id);
+		const result = await modelProduct.getId(req.params.id);
+		const data = JSON.stringify(result);
+		logger.debug('data dari postgre');
 		handler(res, 200, result);
 	} catch (error) {
+		handler(res, 400, error);
+	}
+};
+
+productsMethod.getAllProductsPopular = async (req, res) => {
+	try {
+		const result = await modelProduct.getAllPopular();
+		const data = JSON.stringify(result);
+		logger.debug('data dari postgre');
+
+		handler(res, 200, result);
+	} catch (error) {
+		handler(res, 400, error);
+	}
+};
+
+productsMethod.getCategory = async (req, res) => {
+	try {
+		const check = await modelProduct.getCategoryId(req.params.kategori_id);
+		//console.log(check);
+		const result = await modelProduct.filterCategory(req.params.kategori_id);
+		if (check.length > 0) {
+			handler(res, 200, result);
+		} else {
+			handler(res, 500, { msg: 'no category available' });
+		}
+	} catch (error) {
+		console.log(error);
 		handler(res, 400, error);
 	}
 };
@@ -29,7 +59,11 @@ productsMethod.getCategory = async (req, res) => {
 productsMethod.searchData = async (req, res) => {
 	try {
 		const result = await modelProduct.search(req.query.p);
-		handler(res, 200, result);
+		if (result.length !== 0) {
+			handler(res, 200, result);
+		} else {
+			return handler(res, 400, { msg: 'no data available' });
+		}
 	} catch (error) {
 		handler(res, 400, error);
 	}
@@ -71,8 +105,6 @@ productsMethod.sort = async (req, res) => {
 		if (key == 6) {
 			const result = await modelProduct.sortOldest();
 			handler(res, 200, result);
-			l;
-			res.send('no sorting available');
 		}
 	} catch (error) {
 		handler(res, 400, error);
@@ -86,6 +118,7 @@ productsMethod.addToBag = async (req, res) => {
 		handler(res, 200, result);
 	} catch (error) {
 		handler(res, 400, error);
+		console.log(error);
 	}
 };
 
@@ -93,10 +126,8 @@ productsMethod.updateProduct = async (req, res) => {
 	try {
 		const check = await modelProduct.getId(req.body.id);
 		let urlImage = '';
-		if (check.length <= 0) {
-			return handler(res, 200, { msg: 'wrong product id!' });
-		} else if (req.file !== undefined) {
-			urlImage = await uploadToCloudinary(req.file.path);
+		if (req.file !== undefined) {
+			urlImage = await uploads(req.file.path);
 		}
 		const data = {
 			nama: req.body.nama,
@@ -105,6 +136,8 @@ productsMethod.updateProduct = async (req, res) => {
 			kategori_id: req.body.kategori_id,
 			harga: req.body.harga,
 			img: urlImage || req.file.path,
+			stock: req.body.stock,
+			product_desc: req.body.product_desc,
 			id: req.body.id,
 		};
 		console.log(data);
@@ -132,7 +165,8 @@ productsMethod.addToProduct = async (req, res) => {
 	try {
 		let urlImage = '';
 		if (req.file !== undefined) {
-			urlImage = await uploadToCloudinary(req.file.path);
+			console.log(`path=${req.file.path}`);
+			urlImage = await uploads(req.file.path);
 		}
 		const data = {
 			nama: req.body.nama,
@@ -140,7 +174,9 @@ productsMethod.addToProduct = async (req, res) => {
 			kategori: req.body.kategori,
 			harga: req.body.harga,
 			kategori_id: req.body.kategori_id,
-			img: urlImage || req.file.path,
+			stock: req.body.stock,
+			product_desc: req.body.product_desc,
+			img: urlImage,
 		};
 
 		const result = await modelProduct.addProduct(data);

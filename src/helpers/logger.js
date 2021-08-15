@@ -24,9 +24,6 @@ const myFormat = printf(({ level, message, timestamp }) => {
 
 const logger = createLogger({
 	levels: config.npm.levels,
-	timestamp: function () {
-		return +new Date();
-	},
 	format: combine(timestamp(), myFormat),
 	transports: [
 		new transports.File(options.file, timestamp),

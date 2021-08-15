@@ -9,7 +9,7 @@ sellerDB.addData = (data) => {
 		)
 			.then((res) => {
 				console.log(data);
-				resolve({ msg: 'new seller registered' });
+				resolve({ msg: 'successfully add new seller' });
 			})
 			.catch((err) => {
 				reject(err);
@@ -35,7 +35,6 @@ sellerDB.addPass = (data) => {
 			`UPDATE public.sellers SET pass='${data.pass}' where email='${data.email}'`
 		)
 			.then((res) => {
-				console.log(res);
 				resolve(res);
 			})
 			.catch((err) => {

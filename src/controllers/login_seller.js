@@ -13,7 +13,7 @@ const token = async (email) => {
 		const token = jwt.sign(payload, process.env.JWT_KEY, { expiresIn: '1h' });
 		const result = {
 			token: token,
-			msg: 'token created login success !',
+			msg: 'Login Success',
 		};
 
 		return result;
@@ -30,12 +30,9 @@ loginMethod.login = async (req, res) => {
 		if (check) {
 			const result = await token(req.body.email);
 			return handler(res, 200, result);
-		} else {
-			return handler(res, 401, error, true);
 		}
 	} catch (error) {
-		console.log(error);
-		handler(res, 500, { msg: 'wrong password or email' });
+		handler(res, 500, { msg: 'Cannot login: wrong password or email' });
 	}
 };
 

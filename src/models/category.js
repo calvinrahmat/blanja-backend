@@ -5,7 +5,7 @@ categoryDB.getCategory = () => {
 	return new Promise((resolve, reject) => {
 		db.query('SELECT * from public.category')
 			.then((res) => {
-				resolve(res.rows);
+				resolve(res);
 			})
 			.catch((err) => {
 				reject(err);
@@ -15,10 +15,9 @@ categoryDB.getCategory = () => {
 
 categoryDB.addItem = (data) => {
 	return new Promise((resolve, reject) => {
-		db.query(
-			'INSERT INTO category (kategori_id, nama_kategori) VALUES ($1,$2)',
-			[data.kategori_id, data.nama_kategori]
-		)
+		db.query('INSERT INTO category (nama_kategori) VALUES ($1)', [
+			data.nama_kategori,
+		])
 			.then((res) => {
 				resolve(data);
 			})
@@ -31,16 +30,12 @@ categoryDB.addItem = (data) => {
 
 categoryDB.changeCategory = (data) => {
 	return new Promise((resolve, reject) => {
-		db.query(
-			'select exists(select 1 from category where kategori_id=$1) AS update',
-			[data.kategori_id]
-		)
+		db.query('UPDATE category SET nama_kategori = $1 where kategori_id = $2', [
+			data.nama_kategori,
+			data.kategori_id,
+		])
 			.then((res) => {
-				db.query(
-					'UPDATE category SET nama_kategori = $1 where kategori_id = $2',
-					[data.nama_kategori, data.kategori_id]
-				);
-				resolve(res.rows);
+				resolve(data);
 			})
 			.catch((err) => {
 				console.log(err);
@@ -49,14 +44,34 @@ categoryDB.changeCategory = (data) => {
 	});
 };
 
-categoryDB.delete = (data) => {
+categoryDB.delete = (id) => {
 	return new Promise((resolve, reject) => {
-		db.query(
-			'select exists(select 1 from category where kategori_id = $1) AS delete',
-			[data]
-		)
+		db.query(`DELETE from category where kategori_id = ${id} `)
 			.then((res) => {
-				db.query('DELETE FROM category WHERE kategori_id = $1', [data]);
+				resolve(res.rows);
+			})
+			.catch((err) => {
+				reject(err);
+			});
+	});
+};
+
+categoryDB.checkName = (name) => {
+	return new Promise((resolve, reject) => {
+		db.query(`SELECT * FROM category WHERE nama_kategori = '${name}'`)
+			.then((res) => {
+				resolve(res.rows);
+			})
+			.catch((err) => {
+				reject(err);
+			});
+	});
+};
+
+categoryDB.checkID = (id) => {
+	return new Promise((resolve, reject) => {
+		db.query(`SELECT * FROM category WHERE kategori_id = ${id}`)
+			.then((res) => {
 				resolve(res.rows);
 			})
 			.catch((err) => {

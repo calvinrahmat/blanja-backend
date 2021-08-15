@@ -13,7 +13,9 @@ userMethod.userRegistration = async (req, res) => {
 			pass: hashedPass,
 		};
 		if (check.length > 0) {
-			return handler(res, 200, { msg: 'email sudah terdaftar !' });
+			return handler(res, 200, {
+				msg: 'register failed email already registered',
+			});
 		}
 		const result = await modelUser.addData(data);
 		return handler(res, 200, result);
@@ -27,11 +29,10 @@ userMethod.resetPassword = async (req, res) => {
 	try {
 		const check = await modelUser.getByEmail(req.body.email);
 		if (check.length <= 0) {
-			return handler(res, 200, { msg: 'email tidak terdaftar !' });
+			return handler(res, 200, { msg: 'email not registered' });
 		}
 		const result = await modelUser.addPass(req.body);
-		console.log(result);
-		return handler(res, 200, result);
+		return handler(res, 200, { msg: 'reset password successfull' });
 	} catch (error) {
 		return handler(res, 500, error, true);
 	}
@@ -40,6 +41,15 @@ userMethod.resetPassword = async (req, res) => {
 userMethod.getAll = async (req, res) => {
 	try {
 		const result = await modelUser.getAll();
+		handler(res, 200, result);
+	} catch (error) {
+		handler(res, 400, error);
+	}
+};
+
+userMethod.getUser = async (req, res) => {
+	try {
+		const result = await modelUser.getByEmail(req.params.email);
 		handler(res, 200, result);
 	} catch (error) {
 		handler(res, 400, error);

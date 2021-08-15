@@ -1,9 +1,24 @@
 const db = require('../configs/db');
+
 const productDB = {};
 
 productDB.getAll = () => {
 	return new Promise((resolve, reject) => {
-		db.query('SELECT * FROM public.fashion ORDER BY id DESC')
+		db.query('SELECT * FROM public.fashion ORDER BY id DESC LIMIT 15')
+			.then((res) => {
+				resolve(res.rows);
+			})
+			.catch((err) => {
+				reject(err);
+			});
+	});
+};
+
+productDB.getAllPopular = () => {
+	return new Promise((resolve, reject) => {
+		db.query(
+			'SELECT * FROM public.fashion ORDER BY id WHERE RATING=5 DESC LIMIT 15'
+		)
 			.then((res) => {
 				resolve(res.rows);
 			})
@@ -15,7 +30,9 @@ productDB.getAll = () => {
 
 productDB.filterCategory = (cat_id) => {
 	return new Promise((resolve, reject) => {
-		db.query(`SELECT * FROM public.fashion WHERE kategori_id = ${cat_id}`)
+		db.query(
+			`SELECT * FROM public.fashion WHERE kategori_id = ${cat_id}  ORDER BY id DESC LIMIT 15 `
+		)
 			.then((res) => {
 				resolve(res.rows);
 			})
@@ -28,9 +45,10 @@ productDB.filterCategory = (cat_id) => {
 
 productDB.filterStore = (data) => {
 	return new Promise((resolve, reject) => {
-		db.query('SELECT * FROM public.fashion WHERE seller ILIKE $1 ', [
-			'%' + data + '%',
-		])
+		db.query(
+			'SELECT * FROM public.fashion WHERE seller ILIKE $1  ORDER BY id DESC LIMIT 15',
+			['%' + data + '%']
+		)
 			.then((res) => {
 				console.log(data);
 				resolve(res.rows);
@@ -44,9 +62,10 @@ productDB.filterStore = (data) => {
 
 productDB.search = (key) => {
 	return new Promise((resolve, reject) => {
-		db.query('SELECT * FROM public.fashion WHERE nama ILIKE $1', [
-			'%' + key + '%',
-		])
+		db.query(
+			'SELECT * FROM public.fashion WHERE nama ILIKE $1  ORDER BY id DESC LIMIT 15',
+			['%' + key + '%']
+		)
 			.then((res) => {
 				resolve(res.rows);
 			})
@@ -59,7 +78,7 @@ productDB.search = (key) => {
 
 productDB.sortNewest = () => {
 	return new Promise((resolve, reject) => {
-		db.query('SELECT * FROM public.fashion ORDER BY id DESC')
+		db.query('SELECT * FROM public.fashion ORDER BY id DESC LIMIT 15')
 			.then((res) => {
 				resolve(res.rows);
 			})
@@ -71,7 +90,7 @@ productDB.sortNewest = () => {
 
 productDB.sortOldest = () => {
 	return new Promise((resolve, reject) => {
-		db.query('SELECT * FROM public.fashion ORDER BY id')
+		db.query('SELECT * FROM public.fashion ORDER BY id LIMIT 15 ')
 			.then((res) => {
 				resolve(res.rows);
 			})
@@ -83,7 +102,7 @@ productDB.sortOldest = () => {
 
 productDB.sortPriceExpensive = () => {
 	return new Promise((resolve, reject) => {
-		db.query('SELECT * FROM public.fashion ORDER BY harga DESC')
+		db.query('SELECT * FROM public.fashion ORDER BY harga DESC LIMIT 15')
 			.then((res) => {
 				resolve(res.rows);
 			})
@@ -95,7 +114,7 @@ productDB.sortPriceExpensive = () => {
 
 productDB.sortPriceCheapest = () => {
 	return new Promise((resolve, reject) => {
-		db.query('SELECT * FROM public.fashion ORDER BY harga')
+		db.query('SELECT * FROM public.fashion ORDER BY harga LIMIT 15')
 			.then((res) => {
 				resolve(res.rows);
 			})
@@ -107,7 +126,7 @@ productDB.sortPriceCheapest = () => {
 
 productDB.sortNameAsc = () => {
 	return new Promise((resolve, reject) => {
-		db.query('SELECT * FROM public.fashion ORDER BY nama')
+		db.query('SELECT * FROM public.fashion ORDER BY nama LIMIT 15')
 			.then((res) => {
 				resolve(res.rows);
 			})
@@ -119,7 +138,7 @@ productDB.sortNameAsc = () => {
 
 productDB.sortNameDesc = () => {
 	return new Promise((resolve, reject) => {
-		db.query('SELECT * FROM public.fashion ORDER BY nama DESC')
+		db.query('SELECT * FROM public.fashion ORDER BY nama DESC LIMIT 15')
 			.then((res) => {
 				resolve(res.rows);
 			})
@@ -148,7 +167,7 @@ productDB.addItemBag = (data) => {
 productDB.changeProduct = (item) => {
 	return new Promise((resolve, reject) => {
 		db.query(
-			'UPDATE fashion SET nama = $1, seller = $2, kategori = $3, kategori_id = $4, harga = $5, img = $6 WHERE id = $7',
+			'UPDATE fashion SET nama = $1, seller = $2, kategori = $3, kategori_id = $4, harga = $5, img = $6,stock=$7, product_desc=$8 WHERE id = $9',
 			[
 				item.nama,
 				item.seller,
@@ -156,6 +175,8 @@ productDB.changeProduct = (item) => {
 				item.kategori_id,
 				item.harga,
 				item.img,
+				item.stock,
+				item.product_desc,
 				item.id,
 			]
 		)
@@ -198,16 +219,19 @@ productDB.delete = (data) => {
 };
 
 productDB.addProduct = (data) => {
+	console.log(data);
 	return new Promise((resolve, reject) => {
 		db.query(
-			'INSERT INTO fashion (nama,seller,kategori,kategori_id,harga,img) VALUES ($1,$2,$3,$4,$5,$6)',
+			'INSERT INTO fashion (nama,seller,kategori,kategori_id,harga,img,stock,product_desc) VALUES ($1,$2,$3,$4,$5,$6,$7,$8)',
 			[
 				data.nama,
 				data.seller,
 				data.kategori,
 				data.kategori_id,
-				data.harga,
+				Number(data.harga),
 				data.img,
+				data.stock,
+				data.product_desc,
 			]
 		)
 			.then((res) => {
@@ -223,6 +247,18 @@ productDB.addProduct = (data) => {
 productDB.getId = (id) => {
 	return new Promise((resolve, reject) => {
 		db.query(`SELECT * FROM fashion WHERE id = ${id}`)
+			.then((res) => {
+				resolve(res.rows);
+			})
+			.catch((err) => {
+				reject(err);
+			});
+	});
+};
+
+productDB.getCategoryId = (id) => {
+	return new Promise((resolve, reject) => {
+		db.query(`SELECT * FROM category where kategori_id = ${id}`)
 			.then((res) => {
 				resolve(res.rows);
 			})

@@ -3,7 +3,7 @@ const myBagDB = {};
 
 myBagDB.getAllBag = () => {
 	return new Promise((resolve, reject) => {
-		db.query('SELECT *, harga * qty AS total FROM bag ORDER BY ID DESC ')
+		db.query('SELECT *, harga * qty AS total FROM bag ORDER BY bag_id DESC ')
 			.then((res) => {
 				resolve(res.rows);
 			})
@@ -14,11 +14,22 @@ myBagDB.getAllBag = () => {
 	});
 };
 
-myBagDB.delete = (item) => {
+myBagDB.delete = (bag_id) => {
 	return new Promise((resolve, reject) => {
-		db.query('select exists(select 1 from bag where id=$1) AS delete', [item])
+		db.query(`DELETE FROM bag WHERE bag_id = ${bag_id} `)
 			.then((res) => {
-				db.query('DELETE FROM bag WHERE id = $1', [item]);
+				resolve(res.rows);
+			})
+			.catch((err) => {
+				reject(err);
+			});
+	});
+};
+
+myBagDB.getID = (bag_id) => {
+	return new Promise((resolve, reject) => {
+		db.query(`SELECT * FROM bag WHERE bag_id = ${bag_id}`)
+			.then((res) => {
 				resolve(res.rows);
 			})
 			.catch((err) => {

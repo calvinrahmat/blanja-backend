@@ -19,11 +19,16 @@ bagMethod.getAll = async (req, res) => {
 
 bagMethod.deleteItem = async (req, res) => {
 	try {
-		const result = await modelBag.delete(req.query.id);
-		redisDb.del('product');
-		handler(res, 200, result);
+		const check = await modelBag.getID(req.query.id);
+		if (check.length > 0) {
+			const result = await modelBag.delete(req.query.id);
+			redisDb.del('product');
+			handler(res, 200, { msg: 'item deleted' });
+		} else {
+			handler(res, 400, { msg: 'no item deleted' });
+		}
 	} catch (error) {
-		handler(res, 400, error);
+		handler(res, 500, error);
 	}
 };
 

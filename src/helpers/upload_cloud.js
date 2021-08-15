@@ -6,6 +6,7 @@ async function uploads(pathFile) {
 			folder: 'fashion',
 			use_filename: true,
 		});
+		console.log(result.url);
 		return result.url;
 	} catch (error) {
 		throw error;

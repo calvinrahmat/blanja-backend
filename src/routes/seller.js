@@ -11,23 +11,19 @@ router.post('/registration', ctrlSeller.sellerRegistration);
 router.put('/reset-password', ctrlSeller.resetPassword);
 router.get(
 	'/:seller',
-	validate('seller'),
+	// validate('seller'),
 	cache.sellerCache,
 	ctrlSeller.getProductSeller
 );
 router.post(
 	'/addProduct',
-	validate('seller'),
+	//validate('seller'),
 	uploads.single('img'),
 	ctrlProduct.addToProduct
 );
-router.delete('/delete', validate('seller'), ctrlProduct.deleteProduct);
-router.put(
-	'/updateProduct',
-	validate('seller'),
-	uploads.single('img'),
-	ctrlProduct.updateProduct
-);
+router.delete('/delete', ctrlProduct.deleteProduct);
+router.put('/updateProduct', uploads.single('img'), ctrlProduct.updateProduct);
+// router.put('/updateProduct', uploads.single('img'), ctrlProduct.addToProduct);
 
 router.put(
 	'/profile',

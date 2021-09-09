@@ -4,10 +4,23 @@ const handler = require('../helpers/errorhandler');
 const { uploads } = require('../helpers/upload_cloud');
 const { redisDb } = require('../configs/redis');
 const logger = require('../helpers/logger');
+const modelProductSeq = require('../models/product-sequelize');
 
 productsMethod.getAllProducts = async (req, res) => {
 	try {
 		const result = await modelProduct.getAll();
+		const data = JSON.stringify(result);
+		logger.debug('data dari postgre');
+		redisDb.set('products', data);
+		handler(res, 200, result);
+	} catch (error) {
+		handler(res, 400, error);
+	}
+};
+
+productsMethod.getAllProductsSeq = async (req, res) => {
+	try {
+		const result = await modelProductSeq.getAll();
 		const data = JSON.stringify(result);
 		logger.debug('data dari postgre');
 		redisDb.set('products', data);
@@ -180,6 +193,33 @@ productsMethod.addToProduct = async (req, res) => {
 		};
 
 		const result = await modelProduct.addProduct(data);
+		redisDb.del('product');
+		handler(res, 200, result);
+	} catch (error) {
+		console.log(error);
+		handler(res, 400, error);
+	}
+};
+
+productsMethod.addToProductSeq = async (req, res) => {
+	try {
+		let urlImage = '';
+		if (req.file !== undefined) {
+			console.log(`path=${req.file.path}`);
+			urlImage = await uploads(req.file.path);
+		}
+		const data = {
+			nama: req.body.nama,
+			seller: req.body.seller,
+			kategori: req.body.kategori,
+			harga: req.body.harga,
+			kategori_id: req.body.kategori_id,
+			stock: req.body.stock,
+			product_desc: req.body.product_desc,
+			img: urlImage,
+		};
+
+		const result = await modelProductSeq.addProduct(data);
 		redisDb.del('product');
 		handler(res, 200, result);
 	} catch (error) {

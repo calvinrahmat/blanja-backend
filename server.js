@@ -1,4 +1,4 @@
- const app = require('./app');
+const app = require('./app');
 const database = require('./src/configs/db');
 const PORT = 7123;
 const redis = require('./src/configs/redis');

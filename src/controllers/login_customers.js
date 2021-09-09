@@ -14,6 +14,7 @@ const token = async (email) => {
 		const result = {
 			token: token,
 			msg: 'Login Success',
+			email: email,
 		};
 
 		return result;
@@ -29,12 +30,16 @@ loginMethod.login = async (req, res) => {
 		const check = await bcrypt.compare(passUser, passDB[0].pass);
 		if (check) {
 			const result = await token(req.body.email);
+			console.log(result);
 			const user = await modelUsers.getByEmail(req.params.email);
 
-			return handler(res, 200, result, user);
+			return handler(res, 200, result);
+		} else {
+			return handler(res, 200, { msg: 'error pass or email' });
 		}
 	} catch (error) {
-		handler(res, 200, { msg: 'Cannot login: wrong password or email' });
+		console.log(error);
+		handler(res, 400, error);
 	}
 };
 

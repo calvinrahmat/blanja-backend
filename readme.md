@@ -25,7 +25,7 @@
       </ul>
     </li>
     <li><a href="#installation">Installation</a></li>
-    <li><a href="#environmet">Enviromental Variables</a></li>
+    <li><a href="#environment">Environmental Variables</a></li>
     <li><a href="#usage">Usage</a></li>
     <li><a href="#contact">Contact</a></>
   </ol>
@@ -39,26 +39,22 @@ This is the backend prototype for Blanja.site. You can check the front-end in th
 
 ## Features
 
-1. Register
-   We use bcrypt to hash the password.
-
-2. Login
-   For the authentication we use JWT to validate the user and also token to access the website.
-
-3. Upload Images
-   To upload images we use multer for handling multipart/form-data. To store the images we use Cloudinary. But you must use the Cloudinary API.
-
-4. Database
-   To store the products information and user's profile we use PostgreSQL.
-
-5. Caching
-   We use Redis to do caching so that you can showing the products catalog much faster.
-
-6. Logging
-   We use Winston to log the requests from the APIs.
-
-7. Testing
-   We use Jest for testing our application. You can simply run `npm test`.
+<ol>
+<li>Register</li>
+<p>We use bcrypt to hash the password.</p>
+<li>Login</li>
+<p>For the authentication we use JWT to validate the user and also token to access the website.</p>
+<li>Upload Images</li>
+<p>To upload images we use multer for handling multipart/form-data. To store the images we use Cloudinary. But you must use the Cloudinary API.</p>
+<li>Store data</li>
+<p>To store the products information and user's profile we use PostgreSQL.</p>
+<li>Caching</li>
+<p>We use Redis to do caching so that you can showing the products catalog much faster.</p>
+<li>Logging</li>
+<p>We use Winston to log the requests from the APIs.</p>
+<li>Testing</li>
+<p>We use Jest for testing our application. You can simply run `npm test`.</p>
+<ol>
 
 ### Built With
 
@@ -81,7 +77,7 @@ This is the backend prototype for Blanja.site. You can check the front-end in th
    ```
 3. Enter your env
 
-## Enviromental Variables
+## Environmental Variables
 
 You must provide the env value to run the application.
 

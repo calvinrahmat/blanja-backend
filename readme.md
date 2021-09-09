@@ -1,5 +1,5 @@
 <h1 align="center">
-  Introduction Restfull Api with ExpressJS and PostgresSQL
+  Blanja Backend
 </h1>
 
 <p align="center"><img src="https://www.arkademy.com/img/logo%20arkademy.1c82cf5c.svg" width="500px" alt="Arkademylogo.svg" /></p>
@@ -18,10 +18,14 @@
     <li>
       <a href="#about-the-project">About The Project</a>
       <ul>
+        <li><a href="#features">Features</a></li>
+      </ul>
+      <ul>
         <li><a href="#built-with">Built With</a></li>
       </ul>
     </li>
     <li><a href="#installation">Installation</a></li>
+    <li><a href="#environmet">Enviromental Variables</a></li>
     <li><a href="#usage">Usage</a></li>
     <li><a href="#contact">Contact</a></>
   </ol>
@@ -31,13 +35,39 @@
 
 ## About The Project
 
-This project is about how to build Rest API with Node, Express JS and PostgresSQL ( Beginner Level ).
+This is the backend prototype for Blanja.site. You can check the front-end in this Repo: https://github.com/calvinrahmat/blanja.
+
+## Features
+
+1. Register
+   We use bcrypt to hash the password.
+
+2. Login
+   For the authentication we use JWT to validate the user and also token to access the website.
+
+3. Upload Images
+   To upload images we use multer for handling multipart/form-data. To store the images we use Cloudinary. But you must use the Cloudinary API.
+
+4. Database
+   To store the products information and user's profile we use PostgreSQL.
+
+5. Caching
+   We use Redis to do caching so that you can showing the products catalog much faster.
+
+6. Logging
+   We use Winston to log the requests from the APIs.
+
+7. Testing
+   We use Jest for testing our application. You can simply run `npm test`.
 
 ### Built With
 
-- [Node JS](https://nodejs.org/en/)
-- [Expres JS](https://expressjs.com/)
+- [NodeJS](https://nodejs.org/en/)
+- [ExpressJS](https://expressjs.com/)
 - [PostgresSQL](https://www.postgresql.org/)
+- [Redis](https://redis.io/)
+- [Sequelize](http://sequelize.org/)
+- [Multer](https://github.com/expressjs/multer)
 
 ### Installation
 
@@ -49,14 +79,43 @@ This project is about how to build Rest API with Node, Express JS and PostgresSQ
    ```sh
    npm install
    ```
+3. Enter your env
+
+## Enviromental Variables
+
+You must provide the env value to run the application.
+
+1. POSTGRESQL:
+
+DB_USERS : To set the user that you have created for POSTGRESQL.
+DB_HOST : To set the host for example 'localhost'
+DB_NAME : To set the database name
+DB_PASS : to set the password for your POSTGRESQL
+
+2. JWT Key:
+
+JWT_KEY : This is for create signature for your token. You can set to anything value that you want either string or number.
+
+3. Cloudinary
+
+Authenticated uploading is done over HTTPS using a secure protocol based on your Cloudinary account's cloud_name, api_key and api_secret parameters.
+
+CLOUD_NAME : To set the cloud name provided in your account.
+CLOUD_KEY : To set the API key provided in your account.
+CLOUD_SECRET : To set the API secret provided in your account.
+
+4. Redis
+
+REDIS_HOST : To set the Redis Host for example 'localhost'
+REDIS_PASS : To set the password for Redis
 
 <!-- USAGE EXAMPLES -->
 
 ## Usage
 
-First thing to do you must configure your database to match the database config in this project or you can create new configuration for your own database. After that you should download POSTMAN to send request and also monitoring. You can use these request to make thing easier :relaxed:
+You should download POSTMAN or any other API testing tool to test the API. You can refer in our documentation :relaxed:
 
-_Please refer to the [Postman Documentation](https://documenter.getpostman.com/view/16482670/Tzm3nHTf)_
+_Please refer to our API documentaion [Postman Documentation](https://documenter.getpostman.com/view/16482670/Tzm3nHTf)_
 
 <!-- CONTACT -->
 

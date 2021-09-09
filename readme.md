@@ -54,9 +54,9 @@ This is the backend prototype for Blanja.site. You can check the front-end in th
 <p>We use Winston to log the requests from the APIs.</p>
 <li>Testing</li>
 <p>We use Jest for testing our application. You can simply run `npm test`.</p>
-<ol>
+</ol>
 
-### Built With
+## Built With
 
 - [NodeJS](https://nodejs.org/en/)
 - [ExpressJS](https://expressjs.com/)
@@ -65,7 +65,7 @@ This is the backend prototype for Blanja.site. You can check the front-end in th
 - [Sequelize](http://sequelize.org/)
 - [Multer](https://github.com/expressjs/multer)
 
-### Installation
+## Installation
 
 1. Clone the repo
    ```sh

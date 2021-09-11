@@ -1,0 +1,57 @@
+version: '3.9' # optional since v1.27.0
+services:
+  redis:
+    image: redis
+    networks:
+      - webnet
+  db:
+    image: postgres
+    networks:
+      - webnet
+    env_file:
+      - database.env
+    volumes:
+      - ./database:/var/lib/postgresql/data/
+    ports:
+      - '5431:5432'
+    environment:
+      POSTGRES_DB: product
+      POSTGRES_USER: calvin
+      POSTGRES_PASSWORD: grand312
+    # deploy:
+    #   mode: replicated
+    #   replicas: 2
+    #   endpoint_mode: vip
+  web:
+    image: calvinrahmat/backend
+    networks:
+      - webnet
+    environment:
+      DB_HOST: db
+      REDIS_HOST: redis
+    deploy:
+      resources:
+        limits:
+          cpus: '0.1'
+          memory: 50M
+    ports:
+      - '7121:7123'
+    command: ['./wait-for-it.sh', 'db:5432', '--', 'node', 'server.js']
+  front:
+    tty: true
+    image: 14c0e6b10a6b
+    # ports:
+    #   - '8080:3000'
+    networks:
+      - webnet
+    #command: ['npm', 'start']
+  webserver:
+    image: f8682de11ec4
+    ports:
+      - '80:80'
+    networks:
+      - webnet
+networks:
+  webnet:
+volumes:
+  database-data:

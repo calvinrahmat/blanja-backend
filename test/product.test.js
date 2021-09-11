@@ -1,3 +1,4 @@
+require('dotenv').config();
 const request = require('supertest');
 const app = require('../app');
 
@@ -8,7 +9,6 @@ const standardResponse = {
 };
 
 const mockProductName = 'shirt';
-const mockKategori = 1;
 const mockProductSeller = 'Erigo';
 
 describe('service api/products', () => {

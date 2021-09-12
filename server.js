@@ -4,16 +4,28 @@ const PORT = 7123;
 const redis = require('./src/configs/redis');
 const logger = require('./src/helpers/logger');
 const orm = require('./src/configs/sequelize');
+const dotenv = require('dotenv');
+
+if (process.env.NODE_ENV === 'development') {
+	dotenv.config({ path: __dirname + '/.env.development' });
+}
+
+if (process.env.NODE_ENV === 'production') {
+	dotenv.config({ path: __dirname + '/.env.production' });
+}
 
 async function init() {
 	try {
 		await database.connect();
-		const msg = await redis.check();
+		if (process.env.NODE_ENV !== 'test') {
+			const msg = await redis.check();
+			logger.info(msg);
+		}
+
 		app.listen(PORT, () => {
 			logger.info(
 				`connection to Postgre established listening on port ${PORT}`
 			);
-			logger.info(msg);
 		});
 	} catch (error) {
 		console.log(error.message);

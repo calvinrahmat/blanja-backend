@@ -111,12 +111,10 @@ REDIS_PASS : To set the password for Redis
 
 You should download POSTMAN or any other API testing tool to test the API. You can refer in our documentation :relaxed:
 
-_Please refer to our API documentaion [Postman Documentation](https://documenter.getpostman.com/view/16482670/Tzm3nHTf)_
+_Please refer to our API documentation [Postman Documentation](https://documenter.getpostman.com/view/16482670/Tzm3nHTf)_
 
 <!-- CONTACT -->
 
 ## Contact
 
 LinkedIn - [https://www.linkedin.com/in/calvin-rahmat](https://www.linkedin.com/in/calvin-rahmat)
-
-Project Link: [https://github.com/github_username/repo_name](https://github.com/github_username/repo_name)

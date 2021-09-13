@@ -1,11 +1,10 @@
 const app = require('./app');
 const database = require('./src/configs/db');
 const PORT = 7123;
-
+const redis = require('./src/configs/redis');
 const logger = require('./src/helpers/logger');
 const orm = require('./src/configs/sequelize');
 const dotenv = require('dotenv');
-const red = require('redis');
 
 if (process.env.NODE_ENV === 'development') {
 	dotenv.config({ path: __dirname + '/.env.development' });
@@ -18,6 +17,10 @@ if (process.env.NODE_ENV === 'production') {
 async function init() {
 	try {
 		await database.connect();
+		if (process.env.NODE_ENV !== 'test') {
+			const msg = await redis.check();
+			logger.info(msg);
+		}
 
 		app.listen(PORT, () => {
 			logger.info(

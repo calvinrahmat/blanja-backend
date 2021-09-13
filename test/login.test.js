@@ -11,11 +11,11 @@ const standardResponse = {
 };
 
 const existedEmailInDatabase = 'tes@gmail.com';
-const existedPassInDatabase = 'tes1234';
+const existedPassInDatabase = 'abcd1234';
 const wrongEmail = 'error@error.com';
 const wrongPass = 'errorpass';
 
-describe('POST /login/customer', () => {
+describe('POST /api/login/customer', () => {
 	test('should return token, message: login success, status code 200, with standard response if the user give correct pass and email', async () => {
 		const response = await request(app)
 			.post('/api/login/customer')

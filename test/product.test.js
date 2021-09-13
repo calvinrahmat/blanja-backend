@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const request = require('supertest');
 const app = require('../app');
 
@@ -8,7 +10,6 @@ const standardResponse = {
 };
 
 const mockProductName = 'shirt';
-const mockKategori = 1;
 const mockProductSeller = 'Erigo';
 
 describe('service /products', () => {
@@ -20,40 +21,6 @@ describe('service /products', () => {
 			expect(response.body.data).toEqual(
 				expect.arrayContaining([
 					expect.objectContaining({ nama: expect.any(String) }),
-				])
-			);
-		});
-	});
-
-	describe('GET /products/search/nama', () => {
-		test('should search product by  successfully, return status code 200 with standard response', async () => {
-			const response = await request(app)
-				.get('/products/search/nama')
-				.query({ p: mockProductName });
-			expect(response.statusCode).toBe(200);
-			expect(response.body).toEqual(expect.objectContaining(standardResponse));
-			expect(response.body.data[0].nama).toMatch(new RegExp(mockProductName));
-		});
-		test('should return message no data available if the search failed, return status code 400 with standard response', async () => {
-			const response = await request(app)
-				.get('/products/search/nama')
-				.query({ p: 'error' });
-			expect(response.statusCode).toBe(400);
-			expect(response.body).toEqual(expect.objectContaining(standardResponse));
-			expect(response.body.data[0].msg).toMatch('no data available');
-		});
-	});
-
-	describe('GET /products/kategori', () => {
-		test('should filter category successfully, return status code 200 with standard response', async () => {
-			const response = await request(app).get(
-				'/products/kategori/' + mockKategori
-			);
-			expect(response.statusCode).toBe(200);
-			expect(response.body).toEqual(expect.objectContaining(standardResponse));
-			expect(response.body.data).toEqual(
-				expect.arrayContaining([
-					expect.objectContaining({ kategori: expect.any(String) }),
 				])
 			);
 		});
@@ -79,7 +46,7 @@ describe('service /products', () => {
 			expect(response.body).toEqual(expect.objectContaining(standardResponse));
 			expect(response.body.data.length).toBeGreaterThan(0);
 		});
-		test('should sort products by name ascending successfully, return status code 200 with standard response ', async () => {
+		test('should sort products by name ascending successfully, return status code 200 with standard response', async () => {
 			const response = await request(app)
 				.get('/products/sort')
 				.query({ ob: 3 });
@@ -117,17 +84,6 @@ describe('service /products', () => {
 			expect(response.statusCode).toBe(200);
 			expect(response.body).toEqual(expect.objectContaining(standardResponse));
 			expect(parseInt(response.body.data[0].id)).toBeGreaterThan(
-				parseInt(response.body.data[length - 1].id)
-			);
-		});
-		test('should sort products by newest to oldest successfully, return status code 200 with standard response', async () => {
-			const response = await request(app)
-				.get('/products/sort')
-				.query({ ob: 3 });
-			const length = response.body.data.length;
-			expect(response.statusCode).toBe(200);
-			expect(response.body).toEqual(expect.objectContaining(standardResponse));
-			expect(parseInt(response.body.data[0].id)).toBeLessThan(
 				parseInt(response.body.data[length - 1].id)
 			);
 		});

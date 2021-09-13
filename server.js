@@ -17,6 +17,10 @@ if (process.env.NODE_ENV === 'production') {
 async function init() {
 	try {
 		await database.connect();
+		if (process.env.NODE_ENV !== 'test') {
+			const msg = await redis.check();
+			logger.info(msg);
+		}
 
 		app.listen(PORT, () => {
 			logger.info(

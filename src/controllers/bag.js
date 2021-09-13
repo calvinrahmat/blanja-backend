@@ -1,15 +1,12 @@
 const bagMethod = {};
 const modelBag = require('../models/bag');
 const handler = require('../helpers/errorhandler');
-const { redisDb } = require('../configs/redis');
 const logger = require('../helpers/logger');
 
 bagMethod.getAll = async (req, res) => {
 	try {
 		const result = await modelBag.getAllBag();
-		const data = JSON.stringify(result);
 		logger.debug('data dari postgre');
-		redisDb.setex('bag', 20, data);
 		handler(res, 200, result);
 	} catch (error) {
 		console.log(error);
@@ -22,7 +19,6 @@ bagMethod.deleteItem = async (req, res) => {
 		const check = await modelBag.getID(req.query.id);
 		if (check.length > 0) {
 			const result = await modelBag.delete(req.query.id);
-			redisDb.del('product');
 			handler(res, 200, { msg: 'item deleted' });
 		} else {
 			handler(res, 400, { msg: 'no item deleted' });
@@ -35,7 +31,6 @@ bagMethod.deleteItem = async (req, res) => {
 bagMethod.updateQuantity = async (req, res) => {
 	try {
 		const result = await modelBag.updateQty(req.body);
-		redisDb.del('product');
 		handler(res, 200, result);
 	} catch (error) {
 		handler(res, 400, error);

@@ -2,7 +2,6 @@ const sellerMethod = {};
 const modelSeller = require('../models/seller');
 const handler = require('../helpers/errorhandler');
 const hash = require('../helpers/hash');
-const { redisDb } = require('../configs/redis');
 
 sellerMethod.sellerRegistration = async (req, res) => {
 	try {
@@ -46,7 +45,6 @@ sellerMethod.getProductSeller = async (req, res) => {
 		const result = await modelSeller.getSeller(req.params.seller);
 		const data = JSON.stringify(result);
 		console.log('data dari postgre');
-		redisDb.setex('seller', 20, data);
 		handler(res, 200, result);
 	} catch (error) {
 		console.log(error);

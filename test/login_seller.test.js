@@ -8,6 +8,7 @@ const standardResponse = {
 	status: expect.any(Number),
 	description: expect.any(String),
 	data: expect.any(Array),
+	// tes
 };
 
 const existedEmailInDatabase = 'supreme@gmail.com';

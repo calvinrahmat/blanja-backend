@@ -22,10 +22,10 @@ pipeline {
             }
              
         }
-         stage('Building image') {
+        stage('Build Image') {
             steps {
-                script{
-                    builderImage = docker.build('${imageName)')
+                script {
+                    builderImage = docker.build("${imageName}")
                 }
             }
         }

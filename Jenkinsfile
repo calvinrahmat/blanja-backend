@@ -1,3 +1,6 @@
+def imageName = "calvinrahmat/backend:dev"
+
+
 pipeline {
     agent any
 
@@ -10,6 +13,7 @@ pipeline {
             }
              
         }
+        
          stage('Running test') {
             steps {
                 nodejs("node14"){
@@ -17,6 +21,22 @@ pipeline {
                 }
             }
              
+        }
+         stage('Building image') {
+            steps {
+                script{
+                    builderImage = docker.build('${imageName)')
+                }
+            }
+        }
+        stage('Testing image') {
+            steps {
+                script{
+                    builderImage.inside {
+                        sh 'echo test image success'
+                    }
+                }
+            }
         }
     }
 }

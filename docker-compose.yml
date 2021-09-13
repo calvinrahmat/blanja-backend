@@ -40,14 +40,14 @@ services:
     ports:
       - '127.0.0.1:7100-7101:7123'
     command: ['./wait-for-it.sh', 'db:5432', '--', 'node', 'server.js']
-  front:
-    tty: true
-    image: calvinrahmat/front_blanja
-    # ports:
-    #   - '8080:3000'
-    networks:
-      - webnet
-    #command: ['npm', 'start']
+  # front:
+  #   tty: true
+  #   image: calvinrahmat/front_blanja
+  #   # ports:
+  #   #   - '8080:3000'
+  #   networks:
+  #     - webnet
+  #command: ['npm', 'start']
   # webserver:
   #   image: calvinrahmat/nginx_blanja
   #   depends_on:

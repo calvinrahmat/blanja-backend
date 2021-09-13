@@ -38,5 +38,12 @@ pipeline {
                 }
             }
         }
+        stage('Push image') {
+            steps {
+                script{
+                    builderImage.push()
+                }
+            }
+        }
     }
 }

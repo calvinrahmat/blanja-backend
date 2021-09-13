@@ -11,7 +11,6 @@ productsMethod.getAllProducts = async (req, res) => {
 		const result = await modelProduct.getAll();
 		const data = JSON.stringify(result);
 		logger.debug('data dari postgre');
-		// redisDb.set('products', data);
 		handler(res, 200, result);
 	} catch (error) {
 		handler(res, 400, error);
@@ -23,7 +22,6 @@ productsMethod.getAllProductsSeq = async (req, res) => {
 		const result = await modelProductSeq.getAll();
 		const data = JSON.stringify(result);
 		logger.debug('data dari postgre');
-		// redisDb.set('products', data);
 		handler(res, 200, result);
 	} catch (error) {
 		handler(res, 400, error);
@@ -95,27 +93,27 @@ productsMethod.filterSeller = async (req, res) => {
 productsMethod.sort = async (req, res) => {
 	try {
 		const key = req.query.ob;
-		if (key == 1) {
+		if (key === 1) {
 			const result = await modelProduct.sortPriceExpensive();
 			handler(res, 200, result);
 		}
-		if (key == 2) {
+		if (key === 2) {
 			const result = await modelProduct.sortPriceCheapest();
 			handler(res, 200, result);
 		}
-		if (key == 3) {
+		if (key === 3) {
 			const result = await modelProduct.sortNameAsc();
 			handler(res, 200, result);
 		}
-		if (key == 4) {
+		if (key === 4) {
 			const result = await modelProduct.sortNameDesc();
 			handler(res, 200, result);
 		}
-		if (key == 5) {
+		if (key === 5) {
 			const result = await modelProduct.sortNewest();
 			handler(res, 200, result);
 		}
-		if (key == 6) {
+		if (key === 6) {
 			const result = await modelProduct.sortOldest();
 			handler(res, 200, result);
 		}
@@ -127,7 +125,6 @@ productsMethod.sort = async (req, res) => {
 productsMethod.addToBag = async (req, res) => {
 	try {
 		const result = await modelProduct.addItemBag(req.body);
-		// redisDb.del('product');
 		handler(res, 200, result);
 	} catch (error) {
 		handler(res, 400, error);
@@ -155,7 +152,6 @@ productsMethod.updateProduct = async (req, res) => {
 		};
 		console.log(data);
 		const result = await modelProduct.changeProduct(data);
-		// redisDb.del('product');
 		handler(res, 200, result);
 	} catch (error) {
 		console.log(error);
@@ -167,7 +163,6 @@ productsMethod.deleteProduct = async (req, res) => {
 	try {
 		console.log(req.query.id);
 		const result = await modelProduct.delete(req.query.id);
-		// redisDb.del('product');
 		handler(res, 200, result);
 	} catch (error) {
 		handler(res, 400, error);
@@ -193,7 +188,6 @@ productsMethod.addToProduct = async (req, res) => {
 		};
 
 		const result = await modelProduct.addProduct(data);
-		// redisDb.del('product');
 		handler(res, 200, result);
 	} catch (error) {
 		console.log(error);
@@ -220,7 +214,6 @@ productsMethod.addToProductSeq = async (req, res) => {
 		};
 
 		const result = await modelProductSeq.addProduct(data);
-		// redisDb.del('product');
 		handler(res, 200, result);
 	} catch (error) {
 		console.log(error);

@@ -8,6 +8,15 @@ pipeline {
                     sh 'npm install'
                 }
             }
+             
+        }
+         stage('Running test') {
+            steps {
+                nodejs("node14"){
+                    sh 'npm test'
+                }
+            }
+             
         }
     }
 }

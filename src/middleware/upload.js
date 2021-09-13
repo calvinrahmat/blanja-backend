@@ -1,7 +1,6 @@
 const multer = require('multer');
 
 const storagePathAndFileName = multer.diskStorage({
-	destination: '/Arkademy/Tugas/Tugas_RestApi/images',
 	filename: (req, file, cb) => {
 		const unique = Date.now();
 		cb(null, unique + '-' + file.originalname);

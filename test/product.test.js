@@ -15,7 +15,7 @@ const mockProductSeller = 'Erigo';
 describe('service /products', () => {
 	describe('GET /products', () => {
 		test('should get all products, return status code 200 with response standard', async () => {
-			const response = await request(app).get('/products');
+			const response = await request(app).get('/api/products');
 			expect(response.statusCode).toBe(200);
 			expect(response.body).toEqual(expect.objectContaining(standardResponse));
 			expect(response.body.data).toEqual(
@@ -29,7 +29,7 @@ describe('service /products', () => {
 	describe('GET /products/search/seller', () => {
 		test('should search product by seller successfully, give status code 200 with response standard', async () => {
 			const response = await request(app)
-				.get('/products/search/seller')
+				.get('/api/products/search/seller')
 				.query({ st: mockProductSeller });
 			expect(response.statusCode).toBe(200);
 			expect(response.body).toEqual(expect.objectContaining(standardResponse));
@@ -40,7 +40,7 @@ describe('service /products', () => {
 	describe('GET /products/sort', () => {
 		test('should sort products by name descending successfully, return status code 200 with standard response', async () => {
 			const response = await request(app)
-				.get('/products/sort')
+				.get('/api/products/sort')
 				.query({ ob: 4 });
 			expect(response.statusCode).toBe(200);
 			expect(response.body).toEqual(expect.objectContaining(standardResponse));
@@ -48,7 +48,7 @@ describe('service /products', () => {
 		});
 		test('should sort products by name ascending successfully, return status code 200 with standard response', async () => {
 			const response = await request(app)
-				.get('/products/sort')
+				.get('/api/products/sort')
 				.query({ ob: 3 });
 			expect(response.statusCode).toBe(200);
 			expect(response.body).toEqual(expect.objectContaining(standardResponse));
@@ -56,7 +56,7 @@ describe('service /products', () => {
 		});
 		test('should sort products by price cheapest to expensive successfully, return status code 200 with standard response', async () => {
 			const response = await request(app)
-				.get('/products/sort')
+				.get('/api/products/sort')
 				.query({ ob: 2 });
 			const length = response.body.data.length;
 			expect(response.statusCode).toBe(200);
@@ -67,7 +67,7 @@ describe('service /products', () => {
 		});
 		test('should sort products by price expensive to cheapest successfully, return status code 200 with standard response', async () => {
 			const response = await request(app)
-				.get('/products/sort')
+				.get('/api/products/sort')
 				.query({ ob: 1 });
 			const length = response.body.data.length;
 			expect(response.statusCode).toBe(200);
@@ -78,7 +78,7 @@ describe('service /products', () => {
 		});
 		test('should sort products by newest to oldest successfully, return status code 200 with standard response', async () => {
 			const response = await request(app)
-				.get('/products/sort')
+				.get('/api/products/sort')
 				.query({ ob: 5 });
 			const length = response.body.data.length;
 			expect(response.statusCode).toBe(200);

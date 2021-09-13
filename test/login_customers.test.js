@@ -18,7 +18,7 @@ const wrongPass = 'errorpass';
 describe('POST /login/customer', () => {
 	test('should return token, message: login success, status code 200, with standard response if the user give correct pass and email', async () => {
 		const response = await request(app)
-			.post('/login/customer')
+			.post('/api/login/customer')
 			.send({ email: existedEmailInDatabase, pass: existedPassInDatabase });
 		expect(response.statusCode).toBe(200);
 		expect(response.body).toEqual(expect.objectContaining(standardResponse));

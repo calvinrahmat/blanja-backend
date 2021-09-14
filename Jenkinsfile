@@ -52,7 +52,7 @@ pipeline {
                     sshPublisher(
                         publishers: [
                             sshPublisherDesc(
-                                configName: 'deploy',
+                                configName: 'develop',
                                 verbose: false,
                                 transfers: [
                                     sshTransfer(

@@ -1,12 +1,14 @@
 version: '3.3' # optional since v1.27.0
 services:
   redis:
+    restart: always
     image: redis
     networks:
       - webnet
     ports:
       - '6379:6379'
   db:
+    restart: always
     image: postgres
     networks:
       - webnet
@@ -21,6 +23,7 @@ services:
       POSTGRES_USER: calvin
       POSTGRES_PASSWORD: grand312
   api:
+    restart: always
     image: calvinrahmat/backend
     networks:
       - webnet
@@ -37,6 +40,7 @@ services:
       - '127.0.0.1:7100-7101:7123'
     command: ['./wait-for-it.sh', 'db:5432', '--', 'node', 'server.js']
   webserver:
+    restart: always
     image: calvinrahmat/nginx_blanja
     ports:
       - '80:80'

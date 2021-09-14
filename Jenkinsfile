@@ -57,7 +57,7 @@ pipeline {
                                 transfers: [
                                     sshTransfer(
                                         sourceFiles: "docker-compose.yaml; database.env",
-                                        execCommand: "docker-compose --compatibility up -d",
+                                        execCommand: "docker-compose down; docker-compose --compatibility up -d",
                                         execTimeout: 120000,
                                     )
                                 ]

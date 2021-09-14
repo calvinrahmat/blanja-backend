@@ -25,7 +25,7 @@ services:
     #   replicas: 2
     #   endpoint_mode: vip
   api:
-    image: calvinrahmat/backend
+    image: calvinrahmat/backend:dev
     networks:
       - webnet
     environment:

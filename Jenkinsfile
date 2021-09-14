@@ -57,7 +57,7 @@ pipeline {
                                 transfers: [
                                     sshTransfer(
                                         sourceFiles: "docker-compose.yaml; database.env",
-                                        execCommand: "cd /home/ubuntu/backend; docker-compose down; docker rm \$(docker ps -aq); docker-compose --compatibility up -d",
+                                        execCommand: "cd /home/ubuntu/backend; docker-compose down; docker-compose --compatibility up -d",
                                         execTimeout: 120000,
                                     )
                                 ]
@@ -67,7 +67,7 @@ pipeline {
                 }
             }
         }
-        stage('Testing docker') {
+        stage('Testing Backend') {
             steps {
                 script{
                     sshPublisher(
@@ -77,7 +77,7 @@ pipeline {
                                 verbose: false,
                                 transfers: [
                                     sshTransfer(                        
-                                        execCommand: "docker ps",
+                                        execCommand: "curl http://blanja.site/api/products",
                                         execTimeout: 120000,
                                     )
                                 ]

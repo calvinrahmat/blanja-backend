@@ -20,12 +20,8 @@ services:
       POSTGRES_DB: product
       POSTGRES_USER: calvin
       POSTGRES_PASSWORD: grand312
-    # deploy:
-    #   mode: replicated
-    #   replicas: 2
-    #   endpoint_mode: vip
   api:
-    image: calvinrahmat/backend:dev
+    image: calvinrahmat/backend
     networks:
       - webnet
     environment:
@@ -40,23 +36,12 @@ services:
     ports:
       - '127.0.0.1:7100-7101:7123'
     command: ['./wait-for-it.sh', 'db:5432', '--', 'node', 'server.js']
-  # front:
-  #   tty: true
-  #   image: calvinrahmat/front_blanja
-  #   # ports:
-  #   #   - '8080:3000'
-  #   networks:
-  #     - webnet
-  #command: ['npm', 'start']
-  # webserver:
-  #   image: calvinrahmat/nginx_blanja
-  #   depends_on:
-  #     - api
-  #     - front
-  #   ports:
-  #     - '80:80'
-  #   networks:
-  #     - webnet
+  webserver:
+    image: calvinrahmat/nginx_blanja
+    ports:
+      - '80:80'
+    networks:
+      - backend_webnet
 networks:
   webnet:
 volumes:

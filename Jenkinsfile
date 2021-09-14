@@ -57,7 +57,27 @@ pipeline {
                                 transfers: [
                                     sshTransfer(
                                         sourceFiles: "docker-compose.yaml; database.env",
-                                        execCommand: "cd /home/ubuntu/backend; docker-compose down; docker-compose --compatibility up -d",
+                                        execCommand: "cd /home/ubuntu/backend; docker-compose down; docker rm $(docker ps -aq); docker-compose --compatibility up -d",
+                                        execTimeout: 120000,
+                                    )
+                                ]
+                            )
+                        ]
+                    )
+                }
+            }
+        }
+        stage('Testing docker') {
+            steps {
+                script{
+                    sshPublisher(
+                        publishers: [
+                            sshPublisherDesc(
+                                configName: 'develop',
+                                verbose: false,
+                                transfers: [
+                                    sshTransfer(                        
+                                        execCommand: "docker ps",
                                         execTimeout: 120000,
                                     )
                                 ]

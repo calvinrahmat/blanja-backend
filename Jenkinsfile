@@ -77,7 +77,7 @@ pipeline {
                                 verbose: false,
                                 transfers: [
                                     sshTransfer(                        
-                                        execCommand: "curl http://blanja.site/api/products",
+                                        execCommand: "curl http://blanja.site/api/product",
                                         execTimeout: 120000,
                                     )
                                 ]

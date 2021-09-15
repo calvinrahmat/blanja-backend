@@ -24,7 +24,7 @@ services:
       POSTGRES_PASSWORD: grand312
   api:
     restart: always
-    image: calvinrahmat/backend
+    image: calvinrahmat/backend:dev
     networks:
       - webnet
     environment:

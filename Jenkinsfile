@@ -67,25 +67,5 @@ pipeline {
                 }
             }
         }
-        stage('Testing Backend') {
-            steps {
-                script{
-                    sshPublisher(
-                        publishers: [
-                            sshPublisherDesc(
-                                configName: 'develop',
-                                verbose: false,
-                                transfers: [
-                                    sshTransfer(                        
-                                        execCommand: "curl http://blanja.site/api/product",
-                                        execTimeout: 120000,
-                                    )
-                                ]
-                            )
-                        ]
-                    )
-                }
-            }
-        }
     }
 }

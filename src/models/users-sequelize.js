@@ -53,10 +53,10 @@ class Users {
 	}
 	update(data) {
 		return new Promise((resolve, reject) => {
-			const { dob, address, gender, phone_number, user_id, img } = data;
+			const { dob, address, gender, phone_number, user_id, img, name } = data;
 			this.table
 				.update(
-					{ dob, address, gender, phone_number, img },
+					{ dob, address, gender, phone_number, img, name },
 					{
 						where: {
 							user_id: user_id,
@@ -64,7 +64,7 @@ class Users {
 					}
 				)
 				.then((res) => {
-					resolve({ msg: 'Profile updated' });
+					resolve({ data });
 				})
 				.catch((err) => {
 					reject(err);

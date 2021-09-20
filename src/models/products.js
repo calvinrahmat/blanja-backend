@@ -151,8 +151,8 @@ productDB.sortNameDesc = () => {
 productDB.addItemBag = (data) => {
 	return new Promise((resolve, reject) => {
 		db.query(
-			'INSERT INTO bag (nama,seller,harga,id,img,qty) SELECT nama,seller,harga,id,img,$1 FROM fashion WHERE id = $2',
-			[data.qty, data.id]
+			'INSERT INTO bag (nama,seller,harga,id,img,qty,email) SELECT nama,seller,harga,id,img,$1,$2 FROM fashion WHERE id = $3',
+			[data.qty, data.email, data.id]
 		)
 			.then((res) => {
 				console.log(data);

@@ -3,11 +3,10 @@ const usersDB = {};
 
 usersDB.addData = (data) => {
 	return new Promise((resolve, reject) => {
-		db.query('INSERT INTO public.users (name, email, pass)VALUES($1, $2, $3)', [
-			data.name,
-			data.email,
-			data.pass,
-		])
+		db.query(
+			'INSERT INTO public.users (name, email, pass,img)VALUES($1, $2, $3,$4)',
+			[data.name, data.email, data.pass, data.img]
+		)
 			.then((res) => {
 				resolve(data);
 			})

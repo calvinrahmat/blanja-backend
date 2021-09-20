@@ -5,7 +5,7 @@ const logger = require('../helpers/logger');
 
 bagMethod.getAll = async (req, res) => {
 	try {
-		const result = await modelBag.getAllBag();
+		const result = await modelBag.getAllBag(req.params.email);
 		logger.debug('data dari postgre');
 		handler(res, 200, result);
 	} catch (error) {

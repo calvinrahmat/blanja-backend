@@ -9,7 +9,7 @@ router.get('/Kategori/:kategori_id', ctrlProducts.getCategory);
 router.get('/search/nama', ctrlProducts.searchData);
 router.get('/search/seller', ctrlProducts.filterSeller);
 router.get('/sort', ctrlProducts.sort);
-router.post('/addToBag', ctrlProducts.addToBag);
+router.post('/addToBag/', ctrlProducts.addToBag);
 router.get('/popular', ctrlProducts.getAllProductsPopular);
 router.get('/:id', ctrlProducts.getOneProduct);
 

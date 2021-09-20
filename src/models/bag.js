@@ -1,9 +1,11 @@
 const db = require('../configs/db');
 const myBagDB = {};
 
-myBagDB.getAllBag = () => {
+myBagDB.getAllBag = (email) => {
 	return new Promise((resolve, reject) => {
-		db.query('SELECT *, harga * qty AS total FROM bag ORDER BY bag_id DESC ')
+		db.query(
+			`SELECT *, harga * qty AS total FROM bag WHERE email = '${email}' ORDER BY bag_id DESC `
+		)
 			.then((res) => {
 				resolve(res.rows);
 			})
@@ -40,13 +42,12 @@ myBagDB.getID = (bag_id) => {
 
 myBagDB.updateQty = (item) => {
 	return new Promise((resolve, reject) => {
-		db.query('select exists(select 1 from bag where id=$1) AS update', [
-			item.id,
+		db.query('UPDATE bag SET qty = $1 where bag_id =$2', [
+			item.qty,
+			item.bag_id,
 		])
 			.then((res) => {
-				db.query('UPDATE bag SET qty = $1 where id =$2', [item.qty, item.id]);
-				console.log(res.rows);
-				resolve(res.rows);
+				resolve(item);
 			})
 			.catch((err) => {
 				reject(err);

@@ -7,10 +7,13 @@ userMethod.userRegistration = async (req, res) => {
 	try {
 		const check = await modelUser.getByEmail(req.body.email);
 		const hashedPass = await hash(req.body.pass);
+		const dummyImg =
+			'https://res.cloudinary.com/calvin-cloud/image/upload/v1626501995/users/user_meodkb.png';
 		const data = {
 			name: req.body.name,
 			email: req.body.email,
 			pass: hashedPass,
+			img: dummyImg,
 		};
 		if (check.length > 0) {
 			return handler(res, 200, {

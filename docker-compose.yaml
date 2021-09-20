@@ -24,7 +24,7 @@ services:
       POSTGRES_PASSWORD: grand312
   api:
     restart: always
-    image: calvinrahmat/backend:dev
+    image: calvinrahmat/backend
     networks:
       - webnet
     environment:
@@ -41,11 +41,17 @@ services:
     command: ['./wait-for-it.sh', 'db:5432', '--', 'node', 'server.js']
   webserver:
     restart: always
-    image: calvinrahmat/nginx_blanja
+    image: calvinrahmat/nginx_blanja2
     ports:
       - '80:80'
     networks:
-      - backend_webnet
+      - webnet
+  front:
+    restart: always
+    tty: true
+    image: calvinrahmat/front_blanja2
+    networks:
+      - webnet
 networks:
   webnet:
 volumes:

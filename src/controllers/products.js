@@ -185,6 +185,8 @@ productsMethod.addToProduct = async (req, res) => {
 			stock: req.body.stock,
 			product_desc: req.body.product_desc,
 			img: urlImage,
+			email: req.body.email,
+			name: req.body.name,
 		};
 
 		const result = await modelProduct.addProduct(data);

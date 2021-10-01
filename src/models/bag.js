@@ -42,12 +42,39 @@ myBagDB.getID = (bag_id) => {
 
 myBagDB.updateQty = (item) => {
 	return new Promise((resolve, reject) => {
-		db.query('UPDATE bag SET qty = $1 where bag_id =$2', [
+		db.query('UPDATE bag SET qty = $1,img=$2 where bag_id =$3', [
 			item.qty,
+			item.img,
 			item.bag_id,
 		])
 			.then((res) => {
 				resolve(item);
+			})
+			.catch((err) => {
+				reject(err);
+			});
+	});
+};
+
+myBagDB.totalQty = (email) => {
+	return new Promise((resolve, reject) => {
+		db.query(`select SUM(qty) as total_qty  from bag where email = '${email}' `)
+			.then((res) => {
+				resolve(res.rows);
+			})
+			.catch((err) => {
+				reject(err);
+			});
+	});
+};
+
+myBagDB.totalPrice = (email) => {
+	return new Promise((resolve, reject) => {
+		db.query(
+			`select SUM(total) as total_price  from bag where email = '${email}' `
+		)
+			.then((res) => {
+				resolve(res.rows);
 			})
 			.catch((err) => {
 				reject(err);

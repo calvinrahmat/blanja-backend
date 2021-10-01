@@ -222,7 +222,7 @@ productDB.addProduct = (data) => {
 	console.log(data);
 	return new Promise((resolve, reject) => {
 		db.query(
-			'INSERT INTO fashion (nama,seller,kategori,kategori_id,harga,img,stock,product_desc) VALUES ($1,$2,$3,$4,$5,$6,$7,$8)',
+			'INSERT INTO fashion (nama,seller,kategori,kategori_id,harga,img,stock,product_desc,email) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9)',
 			[
 				data.nama,
 				data.seller,
@@ -232,6 +232,7 @@ productDB.addProduct = (data) => {
 				data.img,
 				data.stock,
 				data.product_desc,
+				data.email,
 			]
 		)
 			.then((res) => {

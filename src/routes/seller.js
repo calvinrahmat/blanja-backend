@@ -10,26 +10,30 @@ const ormSeller = require('../controllers/seller-sequelize');
 router.post('/registration', ctrlSeller.sellerRegistration);
 router.put('/reset-password', ctrlSeller.resetPassword);
 router.get(
-	'/:seller',
+	'/products/:email',
 	// validate('seller'),
-	cache.sellerCache,
+
 	ctrlSeller.getProductSeller
 );
+router.get(
+	'/profile/:email',
+	// validate('seller')
+	ctrlSeller.getUser
+);
+router.get(
+	'/name/:email',
+	// validate('seller')
+	ctrlSeller.getSellerName
+);
 router.post(
-	'/addProduct',
+	'/addProduct/',
 	//validate('seller'),
 	uploads.single('img'),
 	ctrlProduct.addToProduct
 );
 router.delete('/delete', ctrlProduct.deleteProduct);
 router.put('/updateProduct', uploads.single('img'), ctrlProduct.updateProduct);
-// router.put('/updateProduct', uploads.single('img'), ctrlProduct.addToProduct);
 
-router.put(
-	'/profile',
-	validate('seller'),
-	uploads.single('img'),
-	ormSeller.updateStore
-);
+router.put('/profile', uploads.single('img'), ormSeller.updateStore);
 
 module.exports = router;

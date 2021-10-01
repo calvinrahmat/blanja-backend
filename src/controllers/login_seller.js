@@ -14,6 +14,8 @@ const token = async (email) => {
 		const result = {
 			token: token,
 			msg: 'Login Success',
+			email: email,
+			role: 'seller',
 		};
 
 		return result;

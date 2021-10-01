@@ -15,6 +15,7 @@ const token = async (email) => {
 			token: token,
 			msg: 'Login Success',
 			email: email,
+			role: 'customer',
 		};
 
 		return result;
@@ -31,8 +32,6 @@ loginMethod.login = async (req, res) => {
 		if (check) {
 			const result = await token(req.body.email);
 			console.log(result);
-			const user = await modelUsers.getByEmail(req.params.email);
-
 			return handler(res, 200, result);
 		} else {
 			return handler(res, 200, { msg: 'error pass or email' });

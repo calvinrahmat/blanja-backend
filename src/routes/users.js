@@ -10,7 +10,7 @@ router.put('/reset-password', ctrlUser.resetPassword);
 router.get('/getall', ctrlUser.getAll);
 router.put(
 	'/profile',
-	// validate('customer'),
+	validate('customer'),
 	uploads.single('img'),
 	ormUser.updateProfile
 );

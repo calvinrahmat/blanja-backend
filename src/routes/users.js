@@ -8,12 +8,7 @@ const uploads = require('../middleware/upload');
 router.post('/registration', ctrlUser.userRegistration);
 router.put('/reset-password', ctrlUser.resetPassword);
 router.get('/getall', ctrlUser.getAll);
-router.put(
-	'/profile',
-	validate('customer'),
-	uploads.single('img'),
-	ormUser.updateProfile
-);
+router.put('/profile', uploads.single('img'), ormUser.updateProfile);
 router.get('/:email', ctrlUser.getUser);
 
 module.exports = router;

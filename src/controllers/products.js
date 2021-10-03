@@ -161,10 +161,10 @@ productsMethod.updateProduct = async (req, res) => {
 
 productsMethod.deleteProduct = async (req, res) => {
 	try {
-		console.log(req.query.id);
 		const result = await modelProduct.delete(req.query.id);
 		handler(res, 200, result);
 	} catch (error) {
+		console.log(error);
 		handler(res, 400, error);
 	}
 };

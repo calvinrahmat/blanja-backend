@@ -61,7 +61,7 @@ class Sellers {
 					}
 				)
 				.then((res) => {
-					resolve({ msg: 'Store Profile updated' });
+					resolve(data);
 				})
 				.catch((err) => {
 					reject(err);

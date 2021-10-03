@@ -16,9 +16,34 @@ myBagDB.getAllBag = (email) => {
 	});
 };
 
+myBagDB.getBagItem = (email) => {
+	return new Promise((resolve, reject) => {
+		db.query(`select id, sum(qty) from bag  where email='${email}' group by id`)
+			.then((res) => {
+				resolve(res.rows);
+			})
+			.catch((err) => {
+				console.log(err);
+				reject(err);
+			});
+	});
+};
+
 myBagDB.delete = (bag_id) => {
 	return new Promise((resolve, reject) => {
 		db.query(`DELETE FROM bag WHERE bag_id = ${bag_id} `)
+			.then((res) => {
+				resolve(res.rows);
+			})
+			.catch((err) => {
+				reject(err);
+			});
+	});
+};
+
+myBagDB.deleteAll = (email) => {
+	return new Promise((resolve, reject) => {
+		db.query(`DELETE FROM bag WHERE email = '${email}'`)
 			.then((res) => {
 				resolve(res.rows);
 			})

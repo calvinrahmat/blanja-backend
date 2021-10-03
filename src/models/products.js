@@ -203,13 +203,10 @@ productDB.getCategory = (data) => {
 	});
 };
 
-productDB.delete = (data) => {
+productDB.delete = (id) => {
 	return new Promise((resolve, reject) => {
-		db.query('select exists(select 1 from fashion where id = $1) AS delete', [
-			data,
-		])
+		db.query(`DELETE FROM fashion WHERE id = ${id}`)
 			.then((res) => {
-				db.query('DELETE FROM fashion WHERE id = $1', [data]);
 				resolve(res.rows);
 			})
 			.catch((err) => {

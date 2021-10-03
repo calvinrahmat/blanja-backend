@@ -76,4 +76,23 @@ bagMethod.getTotalPrice = async (req, res) => {
 	}
 };
 
+bagMethod.getBagItemByQty = async (req, res) => {
+	try {
+		const result = await modelBag.getBagItem(req.params.email);
+		handler(res, 200, result);
+	} catch (error) {
+		handler(res, 400, error);
+	}
+};
+
+bagMethod.deleteAllBag = async (req, res) => {
+	try {
+		const result = await modelBag.deleteAll(req.params.email);
+		handler(res, 200, result);
+	} catch (error) {
+		console.log(error);
+		handler(res, 400, error);
+	}
+};
+
 module.exports = bagMethod;

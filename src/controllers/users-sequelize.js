@@ -21,7 +21,7 @@ usersMethod.updateProfile = async (req, res) => {
 			phone_number: req.body.phone_number,
 			user_id: req.body.user_id,
 			name: req.body.name,
-			img: urlImage || dummyImg,
+			img: urlImage,
 		};
 		const result = await usersModel.update(data);
 		handler(res, 200, result);
